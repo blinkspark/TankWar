@@ -25,11 +25,11 @@ public class TankClient extends JFrame {
 		GraphicsDevice device = GraphicsEnvironment
 				.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		DisplayMode displayMode = device.getDisplayMode();
+		device.setFullScreenWindow(client);
 		if (device.isDisplayChangeSupported()) {
-			device.setDisplayMode(new DisplayMode(800, 600, displayMode
+			device.setDisplayMode(new DisplayMode(SCR_WIDTH, SCR_HEIGHT, displayMode
 					.getBitDepth(), DisplayMode.REFRESH_RATE_UNKNOWN));
 		}
-		device.setFullScreenWindow(client);
 	}
 
 	public void launchFrame() {
@@ -37,15 +37,6 @@ public class TankClient extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
-
-		GraphicsDevice device = GraphicsEnvironment
-				.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		DisplayMode displayMode = device.getDisplayMode();
-		if (device.isDisplayChangeSupported()) {
-			device.setDisplayMode(new DisplayMode(800, 600, displayMode
-					.getBitDepth(), DisplayMode.REFRESH_RATE_UNKNOWN));
-		}
-		device.setFullScreenWindow(this);
 	}
 
 	@Override
