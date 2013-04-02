@@ -103,6 +103,10 @@ public class TankClient extends JFrame {
 		g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		g.setColor(defColor);
 	}
+	
+	/**
+	 * 关闭全屏方法
+	 */
 	private void closeFullScreen() {
 		if(device.isDisplayChangeSupported()){
 			device.setDisplayMode(defaultDisplayMode);
