@@ -7,11 +7,15 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+
+import cn.wn.tankwar.tank.Tank;
+import cn.wn.tankwar.tank.TankView;
 
 /**
  * 主窗口类
@@ -29,6 +33,7 @@ public class TankClient extends JFrame {
 
 	private DisplayMode defaultDisplayMode;
 	private GraphicsDevice device;
+	private ArrayList<Tank> tanks = new ArrayList<>();
 
 	/**
 	 * 程序入口
@@ -67,6 +72,8 @@ public class TankClient extends JFrame {
 		addKeyListener(new GameKeyListener());
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new RefreshTask(), new Date() , REFRESH_SEQUENCE);
+		
+		tanks.add(new Tank(100, 100, 40, 40, null, new TankView()));
 	}
 
 	/**
@@ -92,6 +99,10 @@ public class TankClient extends JFrame {
 	@Override
 	public void paint(Graphics g) {
 		backGroundLayer(g);
+		
+		for(Tank t:tanks){
+			t.getView();
+		}
 	}
 	/**
 	 * 背景图层

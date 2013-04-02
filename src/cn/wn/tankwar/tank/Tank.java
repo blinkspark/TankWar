@@ -9,6 +9,30 @@ import java.awt.Point;
  */
 public class Tank {
 
+	/**
+	 * 坦克的构造方法
+	 * @param x 左上角x坐标
+	 * @param y 左上角y坐标
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param controller 控制器
+	 * @param view 视图
+	 */
+	public Tank(int x, int y, int width, int height, TankController controller,
+			TankView view) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.controller = controller;
+		this.view = view;
+		this.centerPoint = new Point(x+width/2,y+height/2);
+		view.attachTO(this);
+	}
+
+	protected int x;
+	protected int y;
 	protected Point centerPoint;
 	protected int width;
 	protected int height;

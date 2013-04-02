@@ -1,5 +1,7 @@
 package cn.wn.tankwar.interfaces;
 
-public interface View {
+import java.awt.Graphics;
 
+public interface View {
+	public void draw(Graphics g);
 }
