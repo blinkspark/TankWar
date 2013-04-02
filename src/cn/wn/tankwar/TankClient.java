@@ -7,6 +7,9 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
@@ -17,12 +20,14 @@ import javax.swing.JFrame;
  */
 public class TankClient extends JFrame {
 	
+	private static final int REFRESH_SEQUENCE = 1000/30;
+
 	private static final long serialVersionUID = 6432091120610414896L;
 
-	private static final int SCR_HEIGHT = 600;
+	public static final int SCR_HEIGHT = 600;
 	public static final int SCR_WIDTH = 800;
-	private DisplayMode defaultDisplayMode;
 
+	private DisplayMode defaultDisplayMode;
 	private GraphicsDevice device;
 
 	/**
@@ -60,8 +65,27 @@ public class TankClient extends JFrame {
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new RefreshTask(), new Date() , REFRESH_SEQUENCE);
 	}
 
+	/**
+	 * 定时刷新类
+	 * @author Wangning
+	 *
+	 */
+	class RefreshTask extends TimerTask{
+
+		/**
+		 * 重写run方法定时器的执行方法
+		 */
+		@Override
+		public void run() {
+			repaint();
+		}
+		
+	}
+	
 	/**
 	 * 绘图方法
 	 */
@@ -79,6 +103,12 @@ public class TankClient extends JFrame {
 		g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		g.setColor(defColor);
 	}
+	private void closeFullScreen() {
+		if(device.isDisplayChangeSupported()){
+			device.setDisplayMode(defaultDisplayMode);
+		}
+		device.setFullScreenWindow(null);
+	}
 	/**
 	 * 键盘监听类
 	 * @author Wangning
@@ -94,10 +124,16 @@ public class TankClient extends JFrame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_ESCAPE:
-				if(device.isDisplayChangeSupported()){
-					device.setDisplayMode(defaultDisplayMode);
+				closeFullScreen();
+				break;
+			case KeyEvent.VK_ENTER:
+				if(e.isAltDown()){
+					if(device.getFullScreenWindow()==null){
+						setFullScreen(TankClient.this);
+					}else {
+						closeFullScreen();
+					}
 				}
-				device.setFullScreenWindow(null);
 				break;
 
 			default:
