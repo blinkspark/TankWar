@@ -5,12 +5,10 @@ import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
@@ -19,11 +17,12 @@ import cn.wn.tankwar.tank.TankView;
 
 /**
  * 主窗口类
+ * 
  * @author Wangning
- *
+ * 
  */
 public class TankClient extends JFrame {
-	
+
 	private static final int REFRESH_SEQUENCE = 1000/30;
 
 	private static final long serialVersionUID = 6432091120610414896L;
@@ -35,9 +34,13 @@ public class TankClient extends JFrame {
 	private GraphicsDevice device;
 	private ArrayList<Tank> tanks = new ArrayList<>();
 
+	private Image bufferImage = null;
+
 	/**
 	 * 程序入口
-	 * @param args 命令行参数
+	 * 
+	 * @param args
+	 *            命令行参数
 	 */
 	public static void main(String[] args) {
 		TankClient client = new TankClient();
@@ -48,16 +51,19 @@ public class TankClient extends JFrame {
 
 	/**
 	 * 设置全屏方法
-	 * @param client 要设置全屏的窗口
+	 * 
+	 * @param client
+	 *            要设置全屏的窗口
 	 */
 	private void setFullScreen(TankClient client) {
-		device = GraphicsEnvironment
-				.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getDefaultScreenDevice();
 		defaultDisplayMode = device.getDisplayMode();
 		device.setFullScreenWindow(client);
 		if (device.isDisplayChangeSupported()) {
-			device.setDisplayMode(new DisplayMode(SCR_WIDTH, SCR_HEIGHT, defaultDisplayMode
-					.getBitDepth(), DisplayMode.REFRESH_RATE_UNKNOWN));
+			device.setDisplayMode(new DisplayMode(SCR_WIDTH, SCR_HEIGHT,
+					defaultDisplayMode.getBitDepth(),
+					DisplayMode.REFRESH_RATE_UNKNOWN));
 		}
 	}
 
@@ -70,43 +76,82 @@ public class TankClient extends JFrame {
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new RefreshTask(), new Date() , REFRESH_SEQUENCE);
-		
+		// Timer timer = new Timer();
+		// timer.schedule(new RefreshTask(), 0 , REFRESH_SEQUENCE);
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (true) {
+					repaint();
+					try {
+						Thread.sleep(REFRESH_SEQUENCE);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+
 		tanks.add(new Tank(100, 100, 40, 40, null, new TankView()));
 	}
 
 	/**
 	 * 定时刷新类
+	 * 
 	 * @author Wangning
-	 *
+	 * 
 	 */
-	class RefreshTask extends TimerTask{
+	class RefreshThread extends Thread {
 
 		/**
 		 * 重写run方法定时器的执行方法
 		 */
 		@Override
 		public void run() {
-			repaint();
+			while (true) {
+				repaint();
+				try {
+					Thread.sleep(REFRESH_SEQUENCE);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		
+
 	}
-	
+
+	@Override
+	public void update(Graphics g) {
+		if (bufferImage == null) {
+			bufferImage = createImage(SCR_WIDTH, SCR_HEIGHT);
+		}
+		Graphics bufferGraphics = bufferImage.getGraphics();
+
+		paint(bufferGraphics);
+
+		g.drawImage(bufferImage, 0, 0, null);
+	}
+
 	/**
 	 * 绘图方法
 	 */
 	@Override
 	public void paint(Graphics g) {
 		backGroundLayer(g);
-		
-		for(Tank t:tanks){
-			t.getView();
+
+		for (Tank tank : tanks) {
+			tank.getView().draw(g);
 		}
 	}
+
 	/**
 	 * 背景图层
-	 * @param g 窗口的绘图
+	 * 
+	 * @param g
+	 *            窗口的绘图
 	 */
 	private void backGroundLayer(Graphics g) {
 		Color defColor = g.getColor();
@@ -114,22 +159,24 @@ public class TankClient extends JFrame {
 		g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		g.setColor(defColor);
 	}
-	
+
 	/**
 	 * 关闭全屏方法
 	 */
 	private void closeFullScreen() {
-		if(device.isDisplayChangeSupported()){
+		if (device.isDisplayChangeSupported()) {
 			device.setDisplayMode(defaultDisplayMode);
 		}
 		device.setFullScreenWindow(null);
 	}
+
 	/**
 	 * 键盘监听类
+	 * 
 	 * @author Wangning
-	 *
+	 * 
 	 */
-	class GameKeyListener extends KeyAdapter{
+	class GameKeyListener extends KeyAdapter {
 
 		/**
 		 * 重写keyRelease方法监听键盘释放事件
@@ -142,10 +189,10 @@ public class TankClient extends JFrame {
 				closeFullScreen();
 				break;
 			case KeyEvent.VK_ENTER:
-				if(e.isAltDown()){
-					if(device.getFullScreenWindow()==null){
+				if (e.isAltDown()) {
+					if (device.getFullScreenWindow() == null) {
 						setFullScreen(TankClient.this);
-					}else {
+					} else {
 						closeFullScreen();
 					}
 				}
@@ -156,7 +203,6 @@ public class TankClient extends JFrame {
 			}
 		}
 
-		
 	}
 
 }

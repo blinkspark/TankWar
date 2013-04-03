@@ -14,14 +14,13 @@ public class TankView implements View {
 
 	private Tank tank;
 
-	public void attachTO(Tank tank) {
+	public void attach(Tank tank) {
 		this.tank = tank;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.fillOval(tank.getX(), tank.getY(), tank.getWidth(), tank.getHeight());		
 	}
 
 	

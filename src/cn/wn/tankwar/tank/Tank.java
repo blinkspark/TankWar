@@ -28,7 +28,7 @@ public class Tank {
 		this.controller = controller;
 		this.view = view;
 		this.centerPoint = new Point(x+width/2,y+height/2);
-		view.attachTO(this);
+		view.attach(this);
 	}
 
 	protected int x;
@@ -36,6 +36,46 @@ public class Tank {
 	protected Point centerPoint;
 	protected int width;
 	protected int height;
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Point getCenterPoint() {
+		return centerPoint;
+	}
+
+	public void setCenterPoint(Point centerPoint) {
+		this.centerPoint = centerPoint;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	protected TankController controller;
 	protected TankView view;
 	
