@@ -24,7 +24,7 @@ import cn.wn.tankwar.tank.TankView;
  */
 public class TankClient extends Frame {
 
-	private static final int REFRESH_SEQUENCE = 1000/30;
+	private static final int REFRESH_SEQUENCE = 1000 / 30;
 
 	private static final long serialVersionUID = 6432091120610414896L;
 
@@ -83,15 +83,15 @@ public class TankClient extends Frame {
 		tanks.add(new Tank(100, 100, 40, 40, null, new TankView()));
 	}
 
-	class GameWindowListener extends WindowAdapter{
+	class GameWindowListener extends WindowAdapter {
 
 		@Override
 		public void windowClosing(WindowEvent e) {
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 定时刷新类
 	 * 
@@ -172,17 +172,39 @@ public class TankClient extends Frame {
 	 */
 	class GameKeyListener extends KeyAdapter {
 
+		private boolean upPressed = false;
+		private boolean downPressed = false;
+		private boolean leftPressed = false;
+		private boolean rightPressed = false;
+
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_UP:
-				tanks.get(0).setY(tanks.get(0).getY()-2);
+				upPressed = true;
+				break;
+			case KeyEvent.VK_DOWN:
+				downPressed = true;
+				break;
+			case KeyEvent.VK_LEFT:
+				leftPressed = true;
+				break;
+			case KeyEvent.VK_RIGHT:
+				rightPressed = true;
 				break;
 
 			default:
 				break;
 			}
+			if (upPressed)
+				tanks.get(0).setY(tanks.get(0).getY() - 5);
+			if (downPressed)
+				tanks.get(0).setY(tanks.get(0).getY() + 5);
+			if (leftPressed)
+				tanks.get(0).setX(tanks.get(0).getX() - 5);
+			if (rightPressed)
+				tanks.get(0).setX(tanks.get(0).getX() + 5);
 		}
 
 		/**
@@ -193,9 +215,9 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_ESCAPE:
-				if(device.getFullScreenWindow()!=null){
+				if (device.getFullScreenWindow() != null) {
 					closeFullScreen();
-				}else {
+				} else {
 					System.exit(0);
 				}
 				break;
@@ -208,7 +230,18 @@ public class TankClient extends Frame {
 					}
 				}
 				break;
-
+			case KeyEvent.VK_UP:
+				upPressed = false;
+				break;
+			case KeyEvent.VK_DOWN:
+				downPressed = false;
+				break;
+			case KeyEvent.VK_LEFT:
+				leftPressed = false;
+				break;
+			case KeyEvent.VK_RIGHT:
+				rightPressed = false;
+				break;
 			default:
 				break;
 			}
