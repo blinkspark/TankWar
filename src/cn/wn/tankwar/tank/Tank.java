@@ -9,6 +9,15 @@ import java.awt.Point;
  */
 public class Tank {
 
+	protected Point centerPoint;
+
+	protected TankController controller;
+	protected int height;
+	protected TankView view;
+	protected int width;
+	protected int x;
+	protected int y;
+
 	/**
 	 * 坦克的构造方法
 	 * @param x 左上角x坐标
@@ -27,58 +36,28 @@ public class Tank {
 		this.height = height;
 		this.controller = controller;
 		this.view = view;
+		this.controller = controller;
 		this.centerPoint = new Point(x+width/2,y+height/2);
-		view.attach(this);
-	}
-
-	protected int x;
-	protected int y;
-	protected Point centerPoint;
-	protected int width;
-	protected int height;
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
+		this.view.attach(this);
+		this.controller.attach(this);
 	}
 
 	public Point getCenterPoint() {
 		return centerPoint;
 	}
 
-	public void setCenterPoint(Point centerPoint) {
-		this.centerPoint = centerPoint;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
+	/**
+	 * 获取坦克的控制器
+	 * @return TankController
+	 */
+	public TankController getController() {
+		return controller;
 	}
 
 	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	protected TankController controller;
-	protected TankView view;
-	
 	/**
 	 * 获取坦克视图类的方法
 	 * @return TankView
@@ -87,12 +66,20 @@ public class Tank {
 		return view;
 	}
 
-	/**
-	 * 设置坦克的视图类
-	 * @param view 坦克视图类
-	 */
-	public void setView(TankView view) {
-		this.view = view;
+	public int getWidth() {
+		return width;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setCenterPoint(Point centerPoint) {
+		this.centerPoint = centerPoint;
 	}
 
 	/**
@@ -102,13 +89,28 @@ public class Tank {
 	public void setController(TankController controller) {
 		this.controller = controller;
 	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
 	
 	/**
-	 * 获取坦克的控制器
-	 * @return TankController
+	 * 设置坦克的视图类
+	 * @param view 坦克视图类
 	 */
-	public TankController getController() {
-		return controller;
+	public void setView(TankView view) {
+		this.view = view;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 
 }

@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import cn.wn.tankwar.tank.Tank;
+import cn.wn.tankwar.tank.TankController;
 import cn.wn.tankwar.tank.TankView;
 
 /**
@@ -80,7 +81,7 @@ public class TankClient extends Frame {
 		new RefreshThread().start();
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, 40, 40, null, new TankView()));
+		tanks.add(new Tank(100, 100, 40, 40, new TankController(), new TankView()));
 	}
 
 	class GameWindowListener extends WindowAdapter {
@@ -198,13 +199,13 @@ public class TankClient extends Frame {
 				break;
 			}
 			if (upPressed)
-				tanks.get(0).setY(tanks.get(0).getY() - 5);
+				tanks.get(0).getController().moveUp();
 			if (downPressed)
-				tanks.get(0).setY(tanks.get(0).getY() + 5);
+				tanks.get(0).getController().moveDown();
 			if (leftPressed)
-				tanks.get(0).setX(tanks.get(0).getX() - 5);
+				tanks.get(0).getController().moveLeft();
 			if (rightPressed)
-				tanks.get(0).setX(tanks.get(0).getX() + 5);
+				tanks.get(0).getController().moveRight();
 		}
 
 		/**
@@ -245,6 +246,14 @@ public class TankClient extends Frame {
 			default:
 				break;
 			}
+			if (upPressed)
+				tanks.get(0).getController().moveUp();
+			if (downPressed)
+				tanks.get(0).getController().moveDown();
+			if (leftPressed)
+				tanks.get(0).getController().moveLeft();
+			if (rightPressed)
+				tanks.get(0).getController().moveRight();
 		}
 
 	}
