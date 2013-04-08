@@ -2,6 +2,7 @@ package cn.wn.tankwar;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -9,8 +10,6 @@ import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.TankView;
@@ -21,7 +20,7 @@ import cn.wn.tankwar.tank.TankView;
  * @author Wangning
  * 
  */
-public class TankClient extends JFrame {
+public class TankClient extends Frame {
 
 	private static final int REFRESH_SEQUENCE = 1000/30;
 
@@ -72,7 +71,7 @@ public class TankClient extends JFrame {
 	 */
 	public void launchFrame() {
 		setTitle("TankWar");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
@@ -177,6 +176,19 @@ public class TankClient extends JFrame {
 	 * 
 	 */
 	class GameKeyListener extends KeyAdapter {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			int keyCode = e.getKeyCode();
+			switch (keyCode) {
+			case KeyEvent.VK_UP:
+				tanks.get(0).setY(tanks.get(0).getY()-2);
+				break;
+
+			default:
+				break;
+			}
+		}
 
 		/**
 		 * 重写keyRelease方法监听键盘释放事件
