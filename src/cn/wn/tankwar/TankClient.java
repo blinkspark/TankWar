@@ -9,6 +9,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import cn.wn.tankwar.tank.Tank;
@@ -71,32 +73,25 @@ public class TankClient extends Frame {
 	 */
 	public void launchFrame() {
 		setTitle("TankWar");
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
-		// Timer timer = new Timer();
-		// timer.schedule(new RefreshTask(), 0 , REFRESH_SEQUENCE);
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-					repaint();
-					try {
-						Thread.sleep(REFRESH_SEQUENCE);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
+		addWindowListener(new GameWindowListener());
+		new RefreshThread().start();
+		setResizable(false);
 
 		tanks.add(new Tank(100, 100, 40, 40, null, new TankView()));
 	}
 
+	class GameWindowListener extends WindowAdapter{
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			System.exit(0);
+		}
+		
+	}
+	
 	/**
 	 * 定时刷新类
 	 * 
@@ -198,7 +193,11 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_ESCAPE:
-				closeFullScreen();
+				if(device.getFullScreenWindow()!=null){
+					closeFullScreen();
+				}else {
+					System.exit(0);
+				}
 				break;
 			case KeyEvent.VK_ENTER:
 				if (e.isAltDown()) {
