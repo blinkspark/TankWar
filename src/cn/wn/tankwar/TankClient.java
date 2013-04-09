@@ -78,10 +78,10 @@ public class TankClient extends Frame {
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
 		addWindowListener(new GameWindowListener());
-		new RefreshThread().start();
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, 40, 40, new TankController(), new TankView()));
+		new RefreshThread().start();
 	}
 
 	class GameWindowListener extends WindowAdapter {
@@ -107,6 +107,7 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (true) {
+				tanks.get(0).getController().move();
 				repaint();
 				try {
 					Thread.sleep(REFRESH_SEQUENCE);
@@ -173,39 +174,27 @@ public class TankClient extends Frame {
 	 */
 	class GameKeyListener extends KeyAdapter {
 
-		private boolean upPressed = false;
-		private boolean downPressed = false;
-		private boolean leftPressed = false;
-		private boolean rightPressed = false;
 
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_UP:
-				upPressed = true;
+				tanks.get(0).setUpPressed(true);
 				break;
 			case KeyEvent.VK_DOWN:
-				downPressed = true;
+				tanks.get(0).setDownPressed(true);
 				break;
 			case KeyEvent.VK_LEFT:
-				leftPressed = true;
+				tanks.get(0).setLeftPressed(true);
 				break;
 			case KeyEvent.VK_RIGHT:
-				rightPressed = true;
+				tanks.get(0).setRightPressed(true);
 				break;
 
 			default:
 				break;
 			}
-			if (upPressed)
-				tanks.get(0).getController().moveUp();
-			if (downPressed)
-				tanks.get(0).getController().moveDown();
-			if (leftPressed)
-				tanks.get(0).getController().moveLeft();
-			if (rightPressed)
-				tanks.get(0).getController().moveRight();
 		}
 
 		/**
@@ -232,28 +221,20 @@ public class TankClient extends Frame {
 				}
 				break;
 			case KeyEvent.VK_UP:
-				upPressed = false;
+				tanks.get(0).setUpPressed(false);
 				break;
 			case KeyEvent.VK_DOWN:
-				downPressed = false;
+				tanks.get(0).setDownPressed(false);
 				break;
 			case KeyEvent.VK_LEFT:
-				leftPressed = false;
+				tanks.get(0).setLeftPressed(false);
 				break;
 			case KeyEvent.VK_RIGHT:
-				rightPressed = false;
+				tanks.get(0).setRightPressed(false);
 				break;
 			default:
 				break;
 			}
-			if (upPressed)
-				tanks.get(0).getController().moveUp();
-			if (downPressed)
-				tanks.get(0).getController().moveDown();
-			if (leftPressed)
-				tanks.get(0).getController().moveLeft();
-			if (rightPressed)
-				tanks.get(0).getController().moveRight();
 		}
 
 	}

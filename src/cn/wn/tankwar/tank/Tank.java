@@ -17,6 +17,42 @@ public class Tank {
 	protected int width;
 	protected int x;
 	protected int y;
+	public boolean isUpPressed() {
+		return upPressed;
+	}
+
+	public void setUpPressed(boolean upPressed) {
+		this.upPressed = upPressed;
+	}
+
+	public boolean isDownPressed() {
+		return downPressed;
+	}
+
+	public void setDownPressed(boolean downPressed) {
+		this.downPressed = downPressed;
+	}
+
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+	public void setLeftPressed(boolean leftPressed) {
+		this.leftPressed = leftPressed;
+	}
+
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
+
+	public void setRightPressed(boolean rightPressed) {
+		this.rightPressed = rightPressed;
+	}
+
+	protected boolean upPressed = false;
+	protected boolean downPressed = false;
+	protected boolean leftPressed = false;
+	protected boolean rightPressed = false;
 
 	/**
 	 * 坦克的构造方法

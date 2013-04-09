@@ -10,6 +10,17 @@ import cn.wn.tankwar.interfaces.Controller;
  */
 public class TankController implements Controller {
 	private Tank tank;
+	
+	public void move() {
+		if (tank.upPressed)
+			tank.getController().moveUp();
+		if (tank.downPressed)
+			tank.getController().moveDown();
+		if (tank.leftPressed)
+			tank.getController().moveLeft();
+		if (tank.rightPressed)
+			tank.getController().moveRight();
+	}
 
 	public Tank getTank() {
 		return tank;
