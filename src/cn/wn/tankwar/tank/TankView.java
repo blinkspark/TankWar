@@ -20,7 +20,7 @@ public class TankView implements View {
 
 	@Override
 	public void draw(Graphics g) {
-		g.fillOval(tank.getX(), tank.getY(), tank.getWidth(), tank.getHeight());		
+		g.drawImage(tank.image, tank.getX(), tank.getY(), null);
 	}
 
 	

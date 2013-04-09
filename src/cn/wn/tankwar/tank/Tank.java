@@ -1,5 +1,6 @@
 package cn.wn.tankwar.tank;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -54,6 +55,8 @@ public class Tank {
 	protected boolean leftPressed = false;
 	protected boolean rightPressed = false;
 
+	protected Image image;
+
 	/**
 	 * 坦克的构造方法
 	 * @param x 左上角x坐标
@@ -63,13 +66,14 @@ public class Tank {
 	 * @param controller 控制器
 	 * @param view 视图
 	 */
-	public Tank(int x, int y, int width, int height, TankController controller,
+	public Tank(int x, int y, int width, int height,Image tankImage, TankController controller,
 			TankView view) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.image=tankImage;
 		this.controller = controller;
 		this.view = view;
 		this.controller = controller;

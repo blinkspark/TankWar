@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import cn.wn.tankwar.resource.R;
 import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.TankController;
 import cn.wn.tankwar.tank.TankView;
@@ -73,6 +74,7 @@ public class TankClient extends Frame {
 	 * 启动窗口方法
 	 */
 	public void launchFrame() {
+		R.Drawable.init();
 		setTitle("TankWar");
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
@@ -80,7 +82,7 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, 40, 40, new TankController(), new TankView()));
+		tanks.add(new Tank(100, 100, 48, 48,R.Drawable.tankImage, new TankController(), new TankView()));
 		new RefreshThread().start();
 	}
 
@@ -147,7 +149,7 @@ public class TankClient extends Frame {
 	 * 背景图层
 	 * 
 	 * @param g
-	 *            窗口的绘图
+	 *            窗口的画笔
 	 */
 	private void backGroundLayer(Graphics g) {
 		Color defColor = g.getColor();
