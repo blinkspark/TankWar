@@ -1,12 +1,14 @@
 package cn.wn.tankwar.tank;
 
-import java.awt.Image;
 import java.awt.Point;
+
+import cn.wn.tankwar.Directions;
 
 /**
  * 坦克模型类
+ * 
  * @author Wangning
- *
+ * 
  */
 public class Tank {
 
@@ -18,6 +20,16 @@ public class Tank {
 	protected int width;
 	protected int x;
 	protected int y;
+	protected Directions direction;
+
+	public Directions getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Directions direction) {
+		this.direction = direction;
+	}
+
 	public boolean isUpPressed() {
 		return upPressed;
 	}
@@ -55,29 +67,35 @@ public class Tank {
 	protected boolean leftPressed = false;
 	protected boolean rightPressed = false;
 
-	protected Image image;
-
 	/**
 	 * 坦克的构造方法
-	 * @param x 左上角x坐标
-	 * @param y 左上角y坐标
-	 * @param width 宽度
-	 * @param height 高度
-	 * @param controller 控制器
-	 * @param view 视图
+	 * 
+	 * @param x
+	 *            左上角x坐标
+	 * @param y
+	 *            左上角y坐标
+	 * @param width
+	 *            宽度
+	 * @param height
+	 *            高度
+	 * @param controller
+	 *            控制器
+	 * @param view
+	 *            视图
 	 */
-	public Tank(int x, int y, int width, int height,Image tankImage, TankController controller,
+	public Tank(int x, int y, int width, int height, TankController controller,
 			TankView view) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.image=tankImage;
+		this.direction = Directions.U;
+
 		this.controller = controller;
 		this.view = view;
 		this.controller = controller;
-		this.centerPoint = new Point(x+width/2,y+height/2);
+		this.centerPoint = new Point(x + width / 2, y + height / 2);
 		this.view.attach(this);
 		this.controller.attach(this);
 	}
@@ -88,6 +106,7 @@ public class Tank {
 
 	/**
 	 * 获取坦克的控制器
+	 * 
 	 * @return TankController
 	 */
 	public TankController getController() {
@@ -100,6 +119,7 @@ public class Tank {
 
 	/**
 	 * 获取坦克视图类的方法
+	 * 
 	 * @return TankView
 	 */
 	public TankView getView() {
@@ -124,18 +144,23 @@ public class Tank {
 
 	/**
 	 * 设置坦克的控制器
-	 * @param controller TankController
+	 * 
+	 * @param controller
+	 *            TankController
 	 */
 	public void setController(TankController controller) {
 		this.controller = controller;
 	}
+
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
+
 	/**
 	 * 设置坦克的视图类
-	 * @param view 坦克视图类
+	 * 
+	 * @param view
+	 *            坦克视图
 	 */
 	public void setView(TankView view) {
 		this.view = view;
@@ -148,7 +173,7 @@ public class Tank {
 	public void setX(int x) {
 		this.x = x;
 	}
-	
+
 	public void setY(int y) {
 		this.y = y;
 	}

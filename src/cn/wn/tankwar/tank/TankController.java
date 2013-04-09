@@ -1,5 +1,6 @@
 package cn.wn.tankwar.tank;
 
+import cn.wn.tankwar.Directions;
 import cn.wn.tankwar.interfaces.Controller;
 
 /**
@@ -10,16 +11,39 @@ import cn.wn.tankwar.interfaces.Controller;
  */
 public class TankController implements Controller {
 	private Tank tank;
-	
+
+	/**
+	 * 移动方法,并在移动后设置坦克方向
+	 */
 	public void move() {
-		if (tank.upPressed)
+		if (tank.upPressed) {
 			tank.getController().moveUp();
-		if (tank.downPressed)
+			tank.setDirection(Directions.U);
+		}
+		if (tank.downPressed) {
 			tank.getController().moveDown();
-		if (tank.leftPressed)
+			tank.setDirection(Directions.D);
+		}
+		if (tank.leftPressed) {
 			tank.getController().moveLeft();
-		if (tank.rightPressed)
+			if(tank.upPressed){
+				tank.setDirection(Directions.LU);
+			}else if(tank.downPressed){
+				tank.setDirection(Directions.LD);
+			}else {
+				tank.setDirection(Directions.L);
+			}
+		}
+		if (tank.rightPressed) {
 			tank.getController().moveRight();
+			if(tank.upPressed){
+				tank.setDirection(Directions.RU);
+			}else if(tank.downPressed){
+				tank.setDirection(Directions.RD);
+			}else {
+				tank.setDirection(Directions.R);
+			}
+		}
 	}
 
 	public Tank getTank() {

@@ -82,7 +82,7 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, 48, 48,R.Drawable.tankImage, new TankController(), new TankView()));
+		tanks.add(new Tank(100, 100, 48, 48,new TankController(), new TankView()));
 		new RefreshThread().start();
 	}
 
