@@ -46,10 +46,18 @@ public class TankController implements Controller {
 		}
 	}
 
+	/**
+	 * 获取绑定的对象
+	 * @return
+	 */
 	public Tank getTank() {
 		return tank;
 	}
 
+	/**
+	 * 绑定坦克对象
+	 * @param tank
+	 */
 	public void attach(Tank tank) {
 		this.tank = tank;
 	}

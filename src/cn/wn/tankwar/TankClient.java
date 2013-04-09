@@ -26,6 +26,9 @@ import cn.wn.tankwar.tank.TankView;
  */
 public class TankClient extends Frame {
 
+	/**
+	 * 刷新频率
+	 */
 	private static final int REFRESH_SEQUENCE = 1000 / 30;
 
 	private static final long serialVersionUID = 6432091120610414896L;
@@ -56,7 +59,7 @@ public class TankClient extends Frame {
 	 * 设置全屏方法
 	 * 
 	 * @param client
-	 *            要设置全屏的窗口
+	 *            要设置全屏的窗口对象
 	 */
 	private void setFullScreen(TankClient client) {
 		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
@@ -86,8 +89,16 @@ public class TankClient extends Frame {
 		new RefreshThread().start();
 	}
 
+	/**
+	 * 窗口监听类,监听退出等事件
+	 * @author Wangning
+	 *
+	 */
 	class GameWindowListener extends WindowAdapter {
 
+		/**
+		 * 程序退出方法
+		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
 			System.exit(0);
@@ -121,6 +132,11 @@ public class TankClient extends Frame {
 
 	}
 
+	/**
+	 * 执行刷新时实际会调用的方法,该方法再调用paint
+	 * 本方法实现了双缓冲
+	 * @see cn.wn.tankwar.TankClient.paint()
+	 */
 	@Override
 	public void update(Graphics g) {
 		if (bufferImage == null) {
@@ -177,6 +193,9 @@ public class TankClient extends Frame {
 	class GameKeyListener extends KeyAdapter {
 
 
+		/**
+		 * 监听键盘的按下事件
+		 */
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();

@@ -15,57 +15,20 @@ public class Tank {
 	protected Point centerPoint;
 
 	protected TankController controller;
-	protected int height;
-	protected TankView view;
-	protected int width;
-	protected int x;
-	protected int y;
 	protected Directions direction;
-
-	public Directions getDirection() {
-		return direction;
-	}
-
-	public void setDirection(Directions direction) {
-		this.direction = direction;
-	}
-
-	public boolean isUpPressed() {
-		return upPressed;
-	}
-
-	public void setUpPressed(boolean upPressed) {
-		this.upPressed = upPressed;
-	}
-
-	public boolean isDownPressed() {
-		return downPressed;
-	}
-
-	public void setDownPressed(boolean downPressed) {
-		this.downPressed = downPressed;
-	}
-
-	public boolean isLeftPressed() {
-		return leftPressed;
-	}
-
-	public void setLeftPressed(boolean leftPressed) {
-		this.leftPressed = leftPressed;
-	}
-
-	public boolean isRightPressed() {
-		return rightPressed;
-	}
-
-	public void setRightPressed(boolean rightPressed) {
-		this.rightPressed = rightPressed;
-	}
-
-	protected boolean upPressed = false;
 	protected boolean downPressed = false;
+	protected int height;
 	protected boolean leftPressed = false;
 	protected boolean rightPressed = false;
+	protected boolean upPressed = false;
+
+	protected TankView view;
+
+	protected int width;
+
+	protected int x;
+
+	protected int y;
 
 	/**
 	 * 坦克的构造方法
@@ -100,6 +63,10 @@ public class Tank {
 		this.controller.attach(this);
 	}
 
+	/**
+	 * 获得坦克的中心点
+	 * @return 返回Point类
+	 */
 	public Point getCenterPoint() {
 		return centerPoint;
 	}
@@ -113,6 +80,18 @@ public class Tank {
 		return controller;
 	}
 
+	/**
+	 * 获得坦克的方向
+	 * @return
+	 */
+	public Directions getDirection() {
+		return direction;
+	}
+
+	/**
+	 * 获得坦克的高度
+	 * @return
+	 */
 	public int getHeight() {
 		return height;
 	}
@@ -126,20 +105,60 @@ public class Tank {
 		return view;
 	}
 
+	/**
+	 * 获得坦克的高度
+	 * @return
+	 */
 	public int getWidth() {
 		return width;
 	}
-
+	
+	/**
+	 * 获得坦克左上角的X坐标
+	 * @return
+	 */
 	public int getX() {
 		return x;
 	}
-
+	
+	/**
+	 * 获得坦克左上角的Y坐标
+	 * @return
+	 */
 	public int getY() {
 		return y;
 	}
+	
+	/**
+	 * 返回下箭头键是否按下
+	 * @return
+	 */
+	public boolean isDownPressed() {
+		return downPressed;
+	}
 
-	public void setCenterPoint(Point centerPoint) {
-		this.centerPoint = centerPoint;
+	/**
+	 * 返回左箭头键是否按下
+	 * @return
+	 */
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+	/**
+	 * 返回右箭头是否按下
+	 * @return
+	 */
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
+
+	/**
+	 * 返回上箭头是否按下
+	 * @return
+	 */
+	public boolean isUpPressed() {
+		return upPressed;
 	}
 
 	/**
@@ -152,8 +171,52 @@ public class Tank {
 		this.controller = controller;
 	}
 
+	/**
+	 * 设置方向
+	 * @param direction
+	 */
+	public void setDirection(Directions direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * 设置下按下状态
+	 * @param downPressed
+	 */
+	public void setDownPressed(boolean downPressed) {
+		this.downPressed = downPressed;
+	}
+
+	/**
+	 * 设置坦克的大小
+	 * @param height
+	 */
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	/**
+	 * 设置左箭头按下状态
+	 * @param leftPressed
+	 */
+	public void setLeftPressed(boolean leftPressed) {
+		this.leftPressed = leftPressed;
+	}
+
+	/**
+	 * 设置右箭头按下状态
+	 * @param rightPressed
+	 */
+	public void setRightPressed(boolean rightPressed) {
+		this.rightPressed = rightPressed;
+	}
+
+	/**
+	 * 设置上箭头按下状态
+	 * @param upPressed
+	 */
+	public void setUpPressed(boolean upPressed) {
+		this.upPressed = upPressed;
 	}
 
 	/**
@@ -166,16 +229,30 @@ public class Tank {
 		this.view = view;
 	}
 
+	/**
+	 * 设置坦克的宽度
+	 * @param width
+	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
+	/**
+	 * 设置坦克左上角X坐标,同时更新中心点X坐标
+	 * @param x
+	 */
 	public void setX(int x) {
 		this.x = x;
+		this.centerPoint.x=x+width/2;
 	}
 
+	/**
+	 * 设置坦克左上角Y坐标,同时更新中心点Y坐标
+	 * @param y
+	 */
 	public void setY(int y) {
 		this.y = y;
+		this.centerPoint.y=y+height/2;
 	}
 
 }

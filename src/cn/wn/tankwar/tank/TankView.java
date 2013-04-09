@@ -1,6 +1,7 @@
 package cn.wn.tankwar.tank;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import cn.wn.tankwar.interfaces.View;
 import cn.wn.tankwar.resource.R;
@@ -15,14 +16,63 @@ public class TankView implements View {
 
 	private Tank tank;
 
+	/**
+	 * 绑定对象
+	 * @param tank
+	 */
 	public void attach(Tank tank) {
 		this.tank = tank;
 	}
 
+	/**
+	 * 绘图方法
+	 */
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+		Graphics2D g2d = (Graphics2D) g;
+		switch (tank.getDirection()) {
+		case U:
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			break;
+		case D:
+			g2d.rotate(Math.toRadians(180), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(-180), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case L:
+			g2d.rotate(Math.toRadians(-90), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(90), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case R:
+			g2d.rotate(Math.toRadians(90), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(-90), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case LU:
+			g2d.rotate(Math.toRadians(-45), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(45), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case RU:
+			g2d.rotate(Math.toRadians(45), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(-45), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case LD:
+			g2d.rotate(Math.toRadians(-135), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(135), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+		case RD:
+			g2d.rotate(Math.toRadians(135), tank.centerPoint.x, tank.centerPoint.y);
+			g.drawImage(R.Drawable.tankImage, tank.getX(), tank.getY(), null);
+			g2d.rotate(Math.toRadians(-135), tank.centerPoint.x, tank.centerPoint.y);
+			break;
+
+		default:
+			break;
+		}
 	}
 
-	
 }
