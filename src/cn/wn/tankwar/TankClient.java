@@ -26,6 +26,8 @@ import cn.wn.tankwar.tank.TankView;
  */
 public class TankClient extends Frame {
 
+	private static final int TANK_SIZE = 48;
+
 	/**
 	 * Ë¢ÐÂÆµÂÊ
 	 */
@@ -85,7 +87,7 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, 48, 48,new TankController(), new TankView()));
+		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,new TankController(), new TankView()));
 		new RefreshThread().start();
 	}
 
