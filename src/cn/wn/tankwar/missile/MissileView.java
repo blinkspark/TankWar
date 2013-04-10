@@ -31,56 +31,56 @@ public class MissileView implements View {
 
 		switch (missile.direction) {
 		case U:
-			g2d.rotate(Math.toRadians(-90), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-90), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(90), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(90), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case D:
-			g2d.rotate(Math.toRadians(90), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(90), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(-90), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-90), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case L:
-			g2d.rotate(Math.toRadians(180), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(180), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(-180), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-180), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case R:
 			drawMissile(g);
 			break;
 		case LU:
-			g2d.rotate(Math.toRadians(-135), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-135), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(135), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(135), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case RU:
-			g2d.rotate(Math.toRadians(-45), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-45), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(45), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(45), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case LD:
-			g2d.rotate(Math.toRadians(135), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(135), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(-135), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-135), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 		case RD:
-			g2d.rotate(Math.toRadians(45), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(45), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			drawMissile(g);
-			g2d.rotate(Math.toRadians(-45), missile.getCenterPoint().x,
-					missile.getCenterPoint().y);
+			g2d.rotate(Math.toRadians(-45), missile.getX()+missile.getWidth()/2,
+					missile.getY()+missile.getHeight()/2);
 			break;
 
 		default:

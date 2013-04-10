@@ -65,6 +65,7 @@ public class Tank {
 
 	/**
 	 * 获得坦克的中心点
+	 * 
 	 * @return 返回Point类
 	 */
 	public Point getCenterPoint() {
@@ -82,6 +83,7 @@ public class Tank {
 
 	/**
 	 * 获得坦克的方向
+	 * 
 	 * @return
 	 */
 	public Directions getDirection() {
@@ -90,6 +92,7 @@ public class Tank {
 
 	/**
 	 * 获得坦克的高度
+	 * 
 	 * @return
 	 */
 	public int getHeight() {
@@ -107,30 +110,34 @@ public class Tank {
 
 	/**
 	 * 获得坦克的高度
+	 * 
 	 * @return
 	 */
 	public int getWidth() {
 		return width;
 	}
-	
+
 	/**
 	 * 获得坦克左上角的X坐标
+	 * 
 	 * @return
 	 */
 	public int getX() {
 		return x;
 	}
-	
+
 	/**
 	 * 获得坦克左上角的Y坐标
+	 * 
 	 * @return
 	 */
 	public int getY() {
 		return y;
 	}
-	
+
 	/**
 	 * 返回下箭头键是否按下
+	 * 
 	 * @return
 	 */
 	public boolean isDownPressed() {
@@ -139,6 +146,7 @@ public class Tank {
 
 	/**
 	 * 返回左箭头键是否按下
+	 * 
 	 * @return
 	 */
 	public boolean isLeftPressed() {
@@ -147,6 +155,7 @@ public class Tank {
 
 	/**
 	 * 返回右箭头是否按下
+	 * 
 	 * @return
 	 */
 	public boolean isRightPressed() {
@@ -155,6 +164,7 @@ public class Tank {
 
 	/**
 	 * 返回上箭头是否按下
+	 * 
 	 * @return
 	 */
 	public boolean isUpPressed() {
@@ -173,6 +183,7 @@ public class Tank {
 
 	/**
 	 * 设置方向
+	 * 
 	 * @param direction
 	 */
 	public void setDirection(Directions direction) {
@@ -181,6 +192,7 @@ public class Tank {
 
 	/**
 	 * 设置下按下状态
+	 * 
 	 * @param downPressed
 	 */
 	public void setDownPressed(boolean downPressed) {
@@ -189,6 +201,7 @@ public class Tank {
 
 	/**
 	 * 设置坦克的大小
+	 * 
 	 * @param height
 	 */
 	public void setHeight(int height) {
@@ -197,6 +210,7 @@ public class Tank {
 
 	/**
 	 * 设置左箭头按下状态
+	 * 
 	 * @param leftPressed
 	 */
 	public void setLeftPressed(boolean leftPressed) {
@@ -205,6 +219,7 @@ public class Tank {
 
 	/**
 	 * 设置右箭头按下状态
+	 * 
 	 * @param rightPressed
 	 */
 	public void setRightPressed(boolean rightPressed) {
@@ -213,6 +228,7 @@ public class Tank {
 
 	/**
 	 * 设置上箭头按下状态
+	 * 
 	 * @param upPressed
 	 */
 	public void setUpPressed(boolean upPressed) {
@@ -231,6 +247,7 @@ public class Tank {
 
 	/**
 	 * 设置坦克的宽度
+	 * 
 	 * @param width
 	 */
 	public void setWidth(int width) {
@@ -239,20 +256,62 @@ public class Tank {
 
 	/**
 	 * 设置坦克左上角X坐标,同时更新中心点X坐标
+	 * 
 	 * @param x
 	 */
 	public void setX(int x) {
 		this.x = x;
-		this.centerPoint.x=x+width/2;
+		updateCenter();
 	}
 
 	/**
 	 * 设置坦克左上角Y坐标,同时更新中心点Y坐标
+	 * 
 	 * @param y
 	 */
 	public void setY(int y) {
 		this.y = y;
-		this.centerPoint.y=y+height/2;
+		updateCenter();
+	}
+
+	public void updateCenter() {
+		switch (direction) {
+		case U:
+			centerPoint.x = x + width / 2;
+			centerPoint.y = y - height / 2;
+			break;
+		case D:
+			centerPoint.x = x - width / 2;
+			centerPoint.y = y + height / 2;
+			break;
+		case L:
+			centerPoint.x = x - width / 2;
+			centerPoint.y = y - height / 2;
+			break;
+		case R:
+			centerPoint.x = x + width / 2;
+			centerPoint.y = y + height / 2;
+			break;
+		case LU:
+			centerPoint.x = x;
+			centerPoint.y = y - (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
+			break;
+		case RU:
+			centerPoint.x = x + (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
+			centerPoint.y = y;
+			break;
+		case LD:
+			centerPoint.x = x - (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
+			centerPoint.y = y;
+			break;
+		case RD:
+			centerPoint.x = x;
+			centerPoint.y = y + (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }
