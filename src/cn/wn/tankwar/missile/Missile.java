@@ -6,10 +6,11 @@ import cn.wn.tankwar.Directions;
 
 /**
  * 子弹类
+ * 
  * @author Wangning
- *
+ * 
  */
-public class Missile{
+public class Missile {
 
 	protected Point centerPoint;
 	protected MissileController controller;
@@ -19,20 +20,28 @@ public class Missile{
 	protected int x;
 	protected int y;
 	protected Directions direction;
-	
+
 	public Missile(int x, int y, int width, int height,
-			MissileController controller, MissileView view,Directions direction) {
+			MissileController controller, MissileView view, Directions direction) {
 		this.x = x;
 		this.y = y;
-		this.centerPoint = centerPoint;
+		this.centerPoint = new Point(x + width / 2, y + height / 2);
 		this.width = width;
 		this.height = height;
 		this.direction = direction;
-		
+
 		this.controller = controller;
 		this.controller.attach(this);
 		this.view = view;
 		this.view.attach(this);
+	}
+
+	public Directions getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Directions direction) {
+		this.direction = direction;
 	}
 
 	public Point getCenterPoint() {
@@ -77,6 +86,7 @@ public class Missile{
 
 	/**
 	 * 设置左上角坐标的同时设置中心坐标
+	 * 
 	 * @param x
 	 */
 	public void setX(int x) {
@@ -89,12 +99,11 @@ public class Missile{
 
 	/**
 	 * 设置左上角坐标的同时设置中心坐标
+	 * 
 	 * @param y
 	 */
 	public void setY(int y) {
 		this.centerPoint.y = this.y = y;
 	}
-	
-	
-	
+
 }

@@ -95,7 +95,7 @@ public class TankClient extends Frame {
 				new TankController(), new TankView()));
 		
 		missile = new Missile(200, 200, 40, 40, new MissileController(),
-				new MissileView(), Directions.U);
+				new MissileView(), Directions.RD);
 		new RefreshThread().start();
 	}
 
@@ -132,6 +132,7 @@ public class TankClient extends Frame {
 		public void run() {
 			while (true) {
 				tanks.get(0).getController().move();
+				missile.getController().move();
 				repaint();
 				try {
 					Thread.sleep(REFRESH_SEQUENCE);
