@@ -20,7 +20,7 @@ public class Missile{
 	protected int y;
 	protected Directions direction;
 	
-	public Missile(int x, int y, Point centerPoint, int width, int height,
+	public Missile(int x, int y, int width, int height,
 			MissileController controller, MissileView view,Directions direction) {
 		this.x = x;
 		this.y = y;
@@ -30,15 +30,9 @@ public class Missile{
 		this.direction = direction;
 		
 		this.controller = controller;
+		this.controller.attach(this);
 		this.view = view;
-	}
-
-	public Directions getDirection() {
-		return direction;
-	}
-
-	public void setDirection(Directions direction) {
-		this.direction = direction;
+		this.view.attach(this);
 	}
 
 	public Point getCenterPoint() {

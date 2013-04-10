@@ -9,6 +9,12 @@ import cn.wn.tankwar.interfaces.Controller;
  */
 public class MissileController implements Controller {
 
+	private Missile missile;
+
+	public void attach(Missile missile) {
+		this.missile = missile;
+	}
+	
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub

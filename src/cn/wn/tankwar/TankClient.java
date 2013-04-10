@@ -13,6 +13,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import cn.wn.tankwar.missile.Missile;
+import cn.wn.tankwar.missile.MissileController;
+import cn.wn.tankwar.missile.MissileView;
 import cn.wn.tankwar.resource.R;
 import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.TankController;
@@ -41,6 +44,7 @@ public class TankClient extends Frame {
 	private DisplayMode defaultDisplayMode;
 	private GraphicsDevice device;
 	private ArrayList<Tank> tanks = new ArrayList<>();
+	private Missile missile;
 
 	private Image bufferImage = null;
 
@@ -87,14 +91,19 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,new TankController(), new TankView()));
+		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
+				new TankController(), new TankView()));
+		
+		missile = new Missile(200, 200, 40, 40, new MissileController(),
+				new MissileView(), Directions.U);
 		new RefreshThread().start();
 	}
 
 	/**
 	 * 窗口监听类,监听退出等事件
+	 * 
 	 * @author Wangning
-	 *
+	 * 
 	 */
 	class GameWindowListener extends WindowAdapter {
 
@@ -135,8 +144,8 @@ public class TankClient extends Frame {
 	}
 
 	/**
-	 * 执行刷新时实际会调用的方法,该方法再调用paint
-	 * 本方法实现了双缓冲
+	 * 执行刷新时实际会调用的方法,该方法再调用paint 本方法实现了双缓冲
+	 * 
 	 * @see cn.wn.tankwar.TankClient.paint()
 	 */
 	@Override
@@ -161,6 +170,8 @@ public class TankClient extends Frame {
 		for (Tank tank : tanks) {
 			tank.getView().draw(g);
 		}
+		
+		missile.getView().draw(g);
 	}
 
 	/**
@@ -193,7 +204,6 @@ public class TankClient extends Frame {
 	 * 
 	 */
 	class GameKeyListener extends KeyAdapter {
-
 
 		/**
 		 * 监听键盘的按下事件
