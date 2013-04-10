@@ -87,6 +87,7 @@ public class TankController implements Controller {
 	public void fire(TankClient tankClient) {
 		tankClient.missile = new Missile(tank.getX(), tank.getY(), 40, 40,
 				new MissileController(), new MissileView(), tank.getDirection());
+		tankClient.missile.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
 
 	}
 
