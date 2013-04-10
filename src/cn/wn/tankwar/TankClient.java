@@ -41,8 +41,8 @@ public class TankClient extends Frame {
 	public static final int SCR_HEIGHT = 600;
 	public static final int SCR_WIDTH = 800;
 
-	private DisplayMode defaultDisplayMode;
-	private GraphicsDevice device;
+	private DisplayMode defaultDisplayMode = null;
+	private GraphicsDevice device = null;
 	private ArrayList<Tank> tanks = new ArrayList<>();
 	public Missile missile;
 
@@ -68,9 +68,13 @@ public class TankClient extends Frame {
 	 *            要设置全屏的窗口对象
 	 */
 	private void setFullScreen(TankClient client) {
-		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getDefaultScreenDevice();
-		defaultDisplayMode = device.getDisplayMode();
+		if(device == null){
+			device = GraphicsEnvironment.getLocalGraphicsEnvironment()
+					.getDefaultScreenDevice();
+		}
+		if(defaultDisplayMode == null){
+			defaultDisplayMode = device.getDisplayMode();
+		}
 		device.setFullScreenWindow(client);
 		if (device.isDisplayChangeSupported()) {
 			device.setDisplayMode(new DisplayMode(SCR_WIDTH, SCR_HEIGHT,
@@ -85,6 +89,7 @@ public class TankClient extends Frame {
 	public void launchFrame() {
 		R.Drawable.init();
 		setTitle("TankWar");
+		setLocation(100, 100);
 		setSize(SCR_WIDTH, SCR_HEIGHT);
 		setVisible(true);
 		addKeyListener(new GameKeyListener());
@@ -167,12 +172,12 @@ public class TankClient extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		backGroundLayer(g);
+		missile.getView().draw(g);
 
 		for (Tank tank : tanks) {
 			tank.getView().draw(g);
 		}
 		
-		missile.getView().draw(g);
 	}
 
 	/**

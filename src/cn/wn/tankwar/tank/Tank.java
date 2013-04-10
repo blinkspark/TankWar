@@ -275,43 +275,8 @@ public class Tank {
 	}
 
 	public void updateCenter() {
-		switch (direction) {
-		case U:
-			centerPoint.x = x + width / 2;
-			centerPoint.y = y - height / 2;
-			break;
-		case D:
-			centerPoint.x = x - width / 2;
-			centerPoint.y = y + height / 2;
-			break;
-		case L:
-			centerPoint.x = x - width / 2;
-			centerPoint.y = y - height / 2;
-			break;
-		case R:
 			centerPoint.x = x + width / 2;
 			centerPoint.y = y + height / 2;
-			break;
-		case LU:
-			centerPoint.x = x;
-			centerPoint.y = y - (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
-			break;
-		case RU:
-			centerPoint.x = x + (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
-			centerPoint.y = y;
-			break;
-		case LD:
-			centerPoint.x = x - (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
-			centerPoint.y = y;
-			break;
-		case RD:
-			centerPoint.x = x;
-			centerPoint.y = y + (int) Math.pow(Math.sqrt(width / 2) / 2, 2);
-			break;
-
-		default:
-			break;
-		}
 	}
 
 }

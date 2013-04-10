@@ -39,43 +39,8 @@ public class Missile {
 	public void setCenter(int x,int y) {
 		centerPoint.x=x;
 		centerPoint.y=y;
-		switch (direction) {
-		case U:
-			this.x = x-width/2;
-			this.y = y+height/2;
-			break;
-		case D:
-			this.x = x+width/2;
-			this.y = y-height/2;
-			break;
-		case L:
-			this.x = x+width/2;
-			this.y = y+height/2;
-			break;
-		case R:
-			this.x = x-width/2;
-			this.y = y-height/2;
-			break;
-		case LU:
-			this.x=x;
-			this.y = y+(int) Math.pow(Math.sqrt(width/2)/2, 2) ;
-			break;
-		case RU:
-			this.x = x-(int) Math.pow(Math.sqrt(width/2)/2, 2) ;
-			this.y = y;
-			break;
-		case LD:
-			this.x = x+(int) Math.pow(Math.sqrt(width/2)/2, 2) ;
-			this.y = y;
-			break;
-		case RD:
-			this.x=x;
-			this.y = y-(int) Math.pow(Math.sqrt(width/2)/2, 2) ;
-			break;
-
-		default:
-			break;
-		}
+		this.x=x-width/2;
+		this.y=y-height/2;
 	}
 
 	public Directions getDirection() {
