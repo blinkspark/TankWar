@@ -44,7 +44,7 @@ public class TankClient extends Frame {
 	private DisplayMode defaultDisplayMode;
 	private GraphicsDevice device;
 	private ArrayList<Tank> tanks = new ArrayList<>();
-	private Missile missile;
+	public Missile missile;
 
 	private Image bufferImage = null;
 
@@ -266,6 +266,9 @@ public class TankClient extends Frame {
 			case KeyEvent.VK_RIGHT:
 				tanks.get(0).setRightPressed(false);
 				break;
+			case KeyEvent.VK_CONTROL:
+			case KeyEvent.VK_SPACE:
+				tanks.get(0).getController().fire(TankClient.this);
 			default:
 				break;
 			}
