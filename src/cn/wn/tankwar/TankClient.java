@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import cn.wn.tankwar.missile.Missile;
 import cn.wn.tankwar.missile.MissileController;
 import cn.wn.tankwar.missile.MissileView;
+import cn.wn.tankwar.obtacle.Obtacle;
+import cn.wn.tankwar.obtacle.ObtacleView;
 import cn.wn.tankwar.resource.R;
 import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.TankController;
@@ -40,6 +42,7 @@ public class TankClient extends Frame {
 	public static final int SCR_HEIGHT = 600;
 	public static final int SCR_WIDTH = 800;
 
+	private Obtacle obtacle;
 	private GraphicsDevice device = null;
 	private DisplayMode defaultDisplayMode = null;
 	private ArrayList<Tank> tanks = new ArrayList<>();
@@ -52,6 +55,7 @@ public class TankClient extends Frame {
 	}
 
 	private Image bufferImage = null;
+
 
 	/**
 	 * ³ÌÐòÈë¿Ú
@@ -97,6 +101,7 @@ public class TankClient extends Frame {
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
 				new TankController(), new TankView()));
 
+		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missile = new Missile(200, 200, 40, 40, new MissileController(),
 				new MissileView(), Directions.RD);
 		new RefreshThread().start();
@@ -170,6 +175,7 @@ public class TankClient extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		backGroundLayer(g);
+		obtacle.getView().draw(g);
 		missile.getView().draw(g);
 
 		for (Tank tank : tanks) {
