@@ -1,5 +1,7 @@
 package cn.wn.tankwar.obtacle;
 
+import java.awt.Rectangle;
+
 public class Obtacle {
 	protected int height;
 	protected ObtacleView view;
@@ -55,5 +57,9 @@ public class Obtacle {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(x, y, width, height);
 	}
 }

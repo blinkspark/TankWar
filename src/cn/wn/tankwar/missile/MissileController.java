@@ -1,5 +1,6 @@
 package cn.wn.tankwar.missile;
 
+import cn.wn.tankwar.TankClient;
 import cn.wn.tankwar.interfaces.Controller;
 
 /**
@@ -11,6 +12,11 @@ import cn.wn.tankwar.interfaces.Controller;
 public class MissileController implements Controller {
 
 	private Missile missile;
+	private TankClient tc;
+
+	public MissileController(TankClient tc) {
+		this.tc = tc;
+	}
 
 	public void attach(Missile missile) {
 		this.missile = missile;
@@ -18,6 +24,9 @@ public class MissileController implements Controller {
 
 	@Override
 	public void move() {
+		if (isHit()) {
+			return;
+		}
 		switch (missile.getDirection()) {
 		case U:
 			moveUp();
@@ -51,6 +60,14 @@ public class MissileController implements Controller {
 		default:
 			break;
 		}
+	}
+
+	private boolean isHit() {
+		boolean hit = false;
+		if (missile.getRect().intersects(tc.getObtacle().getRect())) {
+			hit = true;
+		}
+		return hit;
 	}
 
 	private void moveRight() {

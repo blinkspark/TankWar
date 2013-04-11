@@ -1,6 +1,7 @@
 package cn.wn.tankwar.missile;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import cn.wn.tankwar.Directions;
 
@@ -111,6 +112,10 @@ public class Missile {
 	 */
 	public void setY(int y) {
 		this.centerPoint.y = this.y = y;
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(x, y, width, height);
 	}
 
 }

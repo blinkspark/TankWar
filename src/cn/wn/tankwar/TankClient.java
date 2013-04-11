@@ -85,6 +85,18 @@ public class TankClient extends Frame {
 		}
 	}
 
+	public Obtacle getObtacle() {
+		return obtacle;
+	}
+
+	public ArrayList<Tank> getTanks() {
+		return tanks;
+	}
+
+	public Missile getMissile() {
+		return missile;
+	}
+
 	/**
 	 * 启动窗口方法
 	 */
@@ -99,10 +111,10 @@ public class TankClient extends Frame {
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new TankController(), new TankView()));
+				new TankController(this), new TankView()));
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
-		missile = new Missile(200, 200, 40, 40, new MissileController(),
+		missile = new Missile(200, 200, 40, 40, new MissileController(this),
 				new MissileView(), Directions.RD);
 		new RefreshThread().start();
 	}
@@ -282,7 +294,7 @@ public class TankClient extends Frame {
 				break;
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:
-				tanks.get(0).getController().fire(TankClient.this);
+				tanks.get(0).getController().fire();
 			default:
 				break;
 			}

@@ -1,6 +1,7 @@
 package cn.wn.tankwar.tank;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import cn.wn.tankwar.Directions;
 
@@ -277,6 +278,10 @@ public class Tank {
 	public void updateCenter() {
 			centerPoint.x = x + width / 2;
 			centerPoint.y = y + height / 2;
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(x, y, width, height);
 	}
 
 }
