@@ -1,6 +1,5 @@
 package cn.wn.tankwar;
 
-import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -68,11 +67,11 @@ public class TankClient extends Frame {
 	 *            要设置全屏的窗口对象
 	 */
 	private void setFullScreen(TankClient client) {
-		if(device == null){
+		if (device == null) {
 			device = GraphicsEnvironment.getLocalGraphicsEnvironment()
 					.getDefaultScreenDevice();
 		}
-		if(defaultDisplayMode == null){
+		if (defaultDisplayMode == null) {
 			defaultDisplayMode = device.getDisplayMode();
 		}
 		device.setFullScreenWindow(client);
@@ -98,7 +97,7 @@ public class TankClient extends Frame {
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
 				new TankController(), new TankView()));
-		
+
 		missile = new Missile(200, 200, 40, 40, new MissileController(),
 				new MissileView(), Directions.RD);
 		new RefreshThread().start();
@@ -177,7 +176,7 @@ public class TankClient extends Frame {
 		for (Tank tank : tanks) {
 			tank.getView().draw(g);
 		}
-		
+
 	}
 
 	/**
@@ -187,10 +186,15 @@ public class TankClient extends Frame {
 	 *            窗口的画笔
 	 */
 	private void backGroundLayer(Graphics g) {
-		Color defColor = g.getColor();
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
-		g.setColor(defColor);
+		// Color defColor = g.getColor();
+		// g.setColor(Color.GREEN);
+		// g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+		// g.setColor(defColor);
+		for(int x = 0;x<SCR_WIDTH;x+=256){
+			for(int y=0;y<SCR_HEIGHT;y+=256){
+				g.drawImage(R.Drawable.backgroundImage, x, y, null);
+			}
+		}
 	}
 
 	/**

@@ -16,6 +16,7 @@ public class R {
 		
 		public static BufferedImage tankImage;
 		public static BufferedImage missileImage;
+		public static BufferedImage backgroundImage;
 		
 		/**
 		 * 初始化方法,初始化资源类,要再程序的一开始调用
@@ -23,7 +24,9 @@ public class R {
 		public static void init() {
 			File tankImageFile = new File(System.getProperty("user.dir")+"\\res\\tank.png");
 			File missileImageFile = new File(System.getProperty("user.dir")+"\\res\\missile.png");
+			File backgroundImageFile = new File(System.getProperty("user.dir")+"\\res\\background.jpg");
 			try {
+				backgroundImage = ImageIO.read(backgroundImageFile);
 				tankImage = ImageIO.read(tankImageFile);
 				missileImage = ImageIO.read(missileImageFile);
 			} catch (IOException e) {
