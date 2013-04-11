@@ -40,10 +40,16 @@ public class TankClient extends Frame {
 	public static final int SCR_HEIGHT = 600;
 	public static final int SCR_WIDTH = 800;
 
-	private DisplayMode defaultDisplayMode = null;
 	private GraphicsDevice device = null;
+	private DisplayMode defaultDisplayMode = null;
 	private ArrayList<Tank> tanks = new ArrayList<>();
 	public Missile missile;
+
+	public TankClient() {
+		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getDefaultScreenDevice();
+		defaultDisplayMode = device.getDisplayMode();
+	}
 
 	private Image bufferImage = null;
 
@@ -57,7 +63,7 @@ public class TankClient extends Frame {
 		TankClient client = new TankClient();
 		client.launchFrame();
 
-		client.setFullScreen(client);
+		// client.setFullScreen(client);
 	}
 
 	/**
@@ -67,13 +73,6 @@ public class TankClient extends Frame {
 	 *            要设置全屏的窗口对象
 	 */
 	private void setFullScreen(TankClient client) {
-		if (device == null) {
-			device = GraphicsEnvironment.getLocalGraphicsEnvironment()
-					.getDefaultScreenDevice();
-		}
-		if (defaultDisplayMode == null) {
-			defaultDisplayMode = device.getDisplayMode();
-		}
 		device.setFullScreenWindow(client);
 		if (device.isDisplayChangeSupported()) {
 			device.setDisplayMode(new DisplayMode(SCR_WIDTH, SCR_HEIGHT,
@@ -190,8 +189,8 @@ public class TankClient extends Frame {
 		// g.setColor(Color.GREEN);
 		// g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		// g.setColor(defColor);
-		for(int x = 0;x<SCR_WIDTH;x+=256){
-			for(int y=0;y<SCR_HEIGHT;y+=256){
+		for (int x = 0; x < SCR_WIDTH; x += 256) {
+			for (int y = 0; y < SCR_HEIGHT; y += 256) {
 				g.drawImage(R.Drawable.backgroundImage, x, y, null);
 			}
 		}
