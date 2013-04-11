@@ -109,7 +109,7 @@ public class Missile {
 	 */
 	public void setX(int x) {
 		this.x = x;
-		this.centerPoint.x = x + width;
+		this.centerPoint.x = x + width / 2;
 	}
 
 	public int getY() {
@@ -123,7 +123,7 @@ public class Missile {
 	 */
 	public void setY(int y) {
 		this.y = y;
-		centerPoint.y = y - height / 2;
+		centerPoint.y = y + height / 2;
 	}
 
 	public Rectangle getRect() {

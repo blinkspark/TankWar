@@ -26,6 +26,9 @@ public class MissileController implements Controller {
 
 	@Override
 	public void move() {
+		if(!missile.isAlive()){
+			return;
+		}
 		if (isHit()) {
 			tc.explode = new Explode(0, 0, 56, 56, new ExplodeView());
 			tc.explode.setCenter(missile.getCenterPoint().x, missile.getCenterPoint().y);
