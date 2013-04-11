@@ -1,6 +1,8 @@
 package cn.wn.tankwar.missile;
 
 import cn.wn.tankwar.TankClient;
+import cn.wn.tankwar.explode.Explode;
+import cn.wn.tankwar.explode.ExplodeView;
 import cn.wn.tankwar.interfaces.Controller;
 
 /**
@@ -25,6 +27,9 @@ public class MissileController implements Controller {
 	@Override
 	public void move() {
 		if (isHit()) {
+			tc.explode = new Explode(0, 0, 56, 56, new ExplodeView());
+			tc.explode.setCenter(missile.getCenterPoint().x, missile.getCenterPoint().y);
+			missile.setAlive(false);
 			return;
 		}
 		switch (missile.getDirection()) {

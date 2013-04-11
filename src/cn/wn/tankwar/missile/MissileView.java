@@ -89,13 +89,15 @@ public class MissileView implements View {
 	}
 
 	private void drawMissile(Graphics g) {
-		g.drawImage(R.Drawable.missileImage, missile.getX(), missile.getY(),
-				missile.getX() + missile.getWidth(),
-				missile.getY() + missile.getHeight(), currentAnimaStage
-						* missile.getWidth(), 0,
-				currentAnimaStage * missile.getWidth() + missile.getWidth(),
-				missile.getHeight(), null);
-		currentAnimaStage++;
+		if(missile.isAlive()){
+			g.drawImage(R.Drawable.missileImage, missile.getX(), missile.getY(),
+					missile.getX() + missile.getWidth(),
+					missile.getY() + missile.getHeight(), currentAnimaStage
+					* missile.getWidth(), 0,
+					currentAnimaStage * missile.getWidth() + missile.getWidth(),
+					missile.getHeight(), null);
+			currentAnimaStage++;
+		}
 	}
 
 }

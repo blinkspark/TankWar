@@ -21,6 +21,15 @@ public class Missile {
 	protected int x;
 	protected int y;
 	protected Directions direction;
+	private boolean alive;
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
 
 	public Missile(int x, int y, int width, int height,
 			MissileController controller, MissileView view, Directions direction) {
@@ -35,13 +44,14 @@ public class Missile {
 		this.controller.attach(this);
 		this.view = view;
 		this.view.attach(this);
+		alive = true;
 	}
-	
-	public void setCenter(int x,int y) {
-		centerPoint.x=x;
-		centerPoint.y=y;
-		this.x=x-width/2;
-		this.y=y-height/2;
+
+	public void setCenter(int x, int y) {
+		centerPoint.x = x;
+		centerPoint.y = y;
+		this.x = x - width / 2;
+		this.y = y - height / 2;
 	}
 
 	public Directions getDirection() {
@@ -98,7 +108,8 @@ public class Missile {
 	 * @param x
 	 */
 	public void setX(int x) {
-		this.centerPoint.x = this.x = x;
+		this.x = x;
+		this.centerPoint.x = x + width;
 	}
 
 	public int getY() {
@@ -111,7 +122,8 @@ public class Missile {
 	 * @param y
 	 */
 	public void setY(int y) {
-		this.centerPoint.y = this.y = y;
+		this.y = y;
+		centerPoint.y = y - height / 2;
 	}
 
 	public Rectangle getRect() {
