@@ -13,11 +13,11 @@ import cn.wn.tankwar.missile.MissileView;
  * @author Wangning
  * 
  */
-public class TankController implements Controller {
-	private Tank tank;
+public class PlayerTankController implements Controller {
+	private PlayerTank tank;
 	private TankClient tc;
 
-	public TankController(TankClient tc) {
+	public PlayerTankController(TankClient tc) {
 		this.tc = tc;
 	}
 
@@ -95,7 +95,7 @@ public class TankController implements Controller {
 	 * 
 	 * @return
 	 */
-	public Tank getTank() {
+	public PlayerTank getTank() {
 		return tank;
 	}
 
@@ -104,7 +104,7 @@ public class TankController implements Controller {
 	 * 
 	 * @param tank
 	 */
-	public void attach(Tank tank) {
+	public void attach(PlayerTank tank) {
 		this.tank = tank;
 	}
 

@@ -20,9 +20,9 @@ import cn.wn.tankwar.missile.MissileView;
 import cn.wn.tankwar.obtacle.Obtacle;
 import cn.wn.tankwar.obtacle.ObtacleView;
 import cn.wn.tankwar.resource.R;
-import cn.wn.tankwar.tank.Tank;
-import cn.wn.tankwar.tank.TankController;
-import cn.wn.tankwar.tank.TankView;
+import cn.wn.tankwar.tank.PlayerTank;
+import cn.wn.tankwar.tank.PlayerTankController;
+import cn.wn.tankwar.tank.PlayerTankView;
 
 /**
  * 主窗口类
@@ -47,7 +47,7 @@ public class TankClient extends Frame {
 	public Obtacle obtacle;
 	private GraphicsDevice device = null;
 	private DisplayMode defaultDisplayMode = null;
-	public ArrayList<Tank> tanks = new ArrayList<>();
+	public ArrayList<PlayerTank> tanks = new ArrayList<>();
 	public Missile missile;
 	public Explode explode;
 
@@ -59,7 +59,7 @@ public class TankClient extends Frame {
 
 	private Image bufferImage = null;
 
-
+	private RefreshThread refreshThread;
 
 	/**
 	 * 程序入口
@@ -93,7 +93,7 @@ public class TankClient extends Frame {
 		return obtacle;
 	}
 
-	public ArrayList<Tank> getTanks() {
+	public ArrayList<PlayerTank> getTanks() {
 		return tanks;
 	}
 
@@ -114,14 +114,15 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new TankController(this), new TankView()));
+		tanks.add(new PlayerTank(100, 100, TANK_SIZE, TANK_SIZE, new PlayerTankController(
+				this), new PlayerTankView()));
 
 		explode = new Explode(200, 400, 56, 56, new ExplodeView());
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missile = new Missile(200, 200, 40, 40, new MissileController(this),
 				new MissileView(), Directions.RD);
-		new RefreshThread().start();
+		refreshThread = new RefreshThread();
+		refreshThread.start();
 	}
 
 	/**
@@ -137,6 +138,12 @@ public class TankClient extends Frame {
 		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
+			try {
+				refreshThread.setExitFlag(true);
+				refreshThread.join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			System.exit(0);
 		}
 
@@ -150,12 +157,18 @@ public class TankClient extends Frame {
 	 */
 	class RefreshThread extends Thread {
 
+		private boolean exit = false;
+
+		public void setExitFlag(boolean exit) {
+			this.exit = exit;
+		}
+
 		/**
 		 * 重写run方法定时器的执行方法
 		 */
 		@Override
 		public void run() {
-			while (true) {
+			while (!exit) {
 				tanks.get(0).getController().move();
 				missile.getController().move();
 				repaint();
@@ -196,7 +209,7 @@ public class TankClient extends Frame {
 		missile.getView().draw(g);
 		explode.getView().draw(g);
 
-		for (Tank tank : tanks) {
+		for (PlayerTank tank : tanks) {
 			tank.getView().draw(g);
 		}
 
@@ -209,10 +222,13 @@ public class TankClient extends Frame {
 	 *            窗口的画笔
 	 */
 	private void backGroundLayer(Graphics g) {
+		//绿色背景
 		// Color defColor = g.getColor();
 		// g.setColor(Color.GREEN);
 		// g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		// g.setColor(defColor);
+		
+		//图片背景
 		for (int x = 0; x < SCR_WIDTH; x += 256) {
 			for (int y = 0; y < SCR_HEIGHT; y += 256) {
 				g.drawImage(R.Drawable.backgroundImage, x, y, null);

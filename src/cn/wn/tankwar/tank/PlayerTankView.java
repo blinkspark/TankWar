@@ -12,16 +12,16 @@ import cn.wn.tankwar.resource.R;
  * @author Wangning
  * 
  */
-public class TankView implements View {
+public class PlayerTankView implements View {
 
-	private Tank tank;
+	private PlayerTank tank;
 
 	/**
 	 * ∞Û∂®∂‘œÛ
 	 * 
 	 * @param tank
 	 */
-	public void attach(Tank tank) {
+	public void attach(PlayerTank tank) {
 		this.tank = tank;
 	}
 

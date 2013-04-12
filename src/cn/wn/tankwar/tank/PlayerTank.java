@@ -11,11 +11,11 @@ import cn.wn.tankwar.Directions;
  * @author Wangning
  * 
  */
-public class Tank {
+public class PlayerTank {
 
 	protected Point centerPoint;
 
-	protected TankController controller;
+	protected PlayerTankController controller;
 	protected Directions direction;
 	protected boolean downPressed = false;
 	protected int height;
@@ -23,7 +23,7 @@ public class Tank {
 	protected boolean rightPressed = false;
 	protected boolean upPressed = false;
 
-	protected TankView view;
+	protected PlayerTankView view;
 
 	protected int width;
 
@@ -47,8 +47,8 @@ public class Tank {
 	 * @param view
 	 *             ”Õº
 	 */
-	public Tank(int x, int y, int width, int height, TankController controller,
-			TankView view) {
+	public PlayerTank(int x, int y, int width, int height, PlayerTankController controller,
+			PlayerTankView view) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -78,7 +78,7 @@ public class Tank {
 	 * 
 	 * @return TankController
 	 */
-	public TankController getController() {
+	public PlayerTankController getController() {
 		return controller;
 	}
 
@@ -105,7 +105,7 @@ public class Tank {
 	 * 
 	 * @return TankView
 	 */
-	public TankView getView() {
+	public PlayerTankView getView() {
 		return view;
 	}
 
@@ -178,7 +178,7 @@ public class Tank {
 	 * @param controller
 	 *            TankController
 	 */
-	public void setController(TankController controller) {
+	public void setController(PlayerTankController controller) {
 		this.controller = controller;
 	}
 
@@ -242,7 +242,7 @@ public class Tank {
 	 * @param view
 	 *            ÃπøÀ ”Õº
 	 */
-	public void setView(TankView view) {
+	public void setView(PlayerTankView view) {
 		this.view = view;
 	}
 
