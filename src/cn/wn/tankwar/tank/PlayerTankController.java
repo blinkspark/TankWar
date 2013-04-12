@@ -14,7 +14,7 @@ import cn.wn.tankwar.missile.MissileView;
  * 
  */
 public class PlayerTankController implements Controller {
-	private PlayerTank tank;
+	private Tank tank;
 	private TankClient tc;
 
 	public PlayerTankController(TankClient tc) {
@@ -95,7 +95,7 @@ public class PlayerTankController implements Controller {
 	 * 
 	 * @return
 	 */
-	public PlayerTank getTank() {
+	public Tank getTank() {
 		return tank;
 	}
 
@@ -104,7 +104,7 @@ public class PlayerTankController implements Controller {
 	 * 
 	 * @param tank
 	 */
-	public void attach(PlayerTank tank) {
+	public void attach(Tank tank) {
 		this.tank = tank;
 	}
 
@@ -127,7 +127,7 @@ public class PlayerTankController implements Controller {
 	public void fire() {
 		tc.missile = new Missile(tank.getX(), tank.getY(), 40, 40,
 				new MissileController(tc), new MissileView(),
-				tank.getDirection());
+				tank.getDirection(),tank.isGood());
 		tc.missile.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
 
 	}

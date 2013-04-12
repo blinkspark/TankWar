@@ -4,6 +4,7 @@ import cn.wn.tankwar.TankClient;
 import cn.wn.tankwar.explode.Explode;
 import cn.wn.tankwar.explode.ExplodeView;
 import cn.wn.tankwar.interfaces.Controller;
+import cn.wn.tankwar.tank.Tank;
 
 /**
  * ×Óµ¯¿ØÖÆÆ÷
@@ -26,12 +27,14 @@ public class MissileController implements Controller {
 
 	@Override
 	public void move() {
-		if(!missile.isAlive()){
+		if (!missile.isAlive()) {
 			return;
 		}
 		if (isHit()) {
-			tc.explode = new Explode(0, 0, 56, 56, new ExplodeView());
-			tc.explode.setCenter(missile.getCenterPoint().x, missile.getCenterPoint().y);
+			Explode explode = new Explode(0, 0, 56, 56, new ExplodeView());
+			explode.setCenter(missile.getCenterPoint().x,
+					missile.getCenterPoint().y);
+			tc.explodes.add(explode);
 			missile.setAlive(false);
 			return;
 		}
@@ -74,6 +77,16 @@ public class MissileController implements Controller {
 		boolean hit = false;
 		if (missile.getRect().intersects(tc.getObtacle().getRect())) {
 			hit = true;
+		} else {
+			for (Tank tank : tc.getTanks()) {
+				if (missile.getRect().intersects(tank.getRect())) {
+					hit = true;
+					tank.setAlive(false);
+					Explode explode = new Explode(0, 0, 56, 56, new ExplodeView());
+					explode.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
+					tc.explodes.add(explode);
+				}
+			}
 		}
 		return hit;
 	}

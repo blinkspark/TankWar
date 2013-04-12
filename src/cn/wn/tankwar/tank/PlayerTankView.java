@@ -14,14 +14,14 @@ import cn.wn.tankwar.resource.R;
  */
 public class PlayerTankView implements View {
 
-	private PlayerTank tank;
+	private Tank tank;
 
 	/**
 	 * ∞Û∂®∂‘œÛ
 	 * 
 	 * @param tank
 	 */
-	public void attach(PlayerTank tank) {
+	public void attach(Tank tank) {
 		this.tank = tank;
 	}
 
@@ -30,6 +30,9 @@ public class PlayerTankView implements View {
 	 */
 	@Override
 	public void draw(Graphics g) {
+		if(!tank.isAlive()){
+			return;
+		}
 		Graphics2D g2d = (Graphics2D) g;
 		switch (tank.getDirection()) {
 		case U:

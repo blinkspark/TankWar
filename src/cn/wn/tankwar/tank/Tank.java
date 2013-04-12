@@ -11,7 +11,7 @@ import cn.wn.tankwar.Directions;
  * @author Wangning
  * 
  */
-public class PlayerTank {
+public class Tank {
 
 	protected Point centerPoint;
 
@@ -22,6 +22,8 @@ public class PlayerTank {
 	protected boolean leftPressed = false;
 	protected boolean rightPressed = false;
 	protected boolean upPressed = false;
+	protected boolean good;
+	protected boolean alive;
 
 	protected PlayerTankView view;
 
@@ -47,9 +49,8 @@ public class PlayerTank {
 	 * @param view
 	 *            йсм╪
 	 */
-	public PlayerTank(int x, int y, int width, int height, PlayerTankController controller,
+	public Tank(int x, int y, int width, int height, PlayerTankController controller,
 			PlayerTankView view) {
-		super();
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -62,6 +63,8 @@ public class PlayerTank {
 		this.centerPoint = new Point(x + width / 2, y + height / 2);
 		this.view.attach(this);
 		this.controller.attach(this);
+		good = true;
+		alive = true;
 	}
 
 	/**
@@ -282,6 +285,18 @@ public class PlayerTank {
 
 	public Rectangle getRect() {
 		return new Rectangle(x, y, width, height);
+	}
+
+	public boolean isGood() {
+		return good;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 }

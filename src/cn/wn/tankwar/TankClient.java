@@ -13,14 +13,13 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import cn.wn.tankwar.explode.Explode;
-import cn.wn.tankwar.explode.ExplodeView;
 import cn.wn.tankwar.missile.Missile;
 import cn.wn.tankwar.missile.MissileController;
 import cn.wn.tankwar.missile.MissileView;
 import cn.wn.tankwar.obtacle.Obtacle;
 import cn.wn.tankwar.obtacle.ObtacleView;
 import cn.wn.tankwar.resource.R;
-import cn.wn.tankwar.tank.PlayerTank;
+import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.PlayerTankController;
 import cn.wn.tankwar.tank.PlayerTankView;
 
@@ -47,9 +46,9 @@ public class TankClient extends Frame {
 	public Obtacle obtacle;
 	private GraphicsDevice device = null;
 	private DisplayMode defaultDisplayMode = null;
-	public ArrayList<PlayerTank> tanks = new ArrayList<>();
+	public ArrayList<Tank> tanks = new ArrayList<>();
 	public Missile missile;
-	public Explode explode;
+	public ArrayList<Explode> explodes = new ArrayList<>();
 
 	public TankClient() {
 		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
@@ -93,7 +92,7 @@ public class TankClient extends Frame {
 		return obtacle;
 	}
 
-	public ArrayList<PlayerTank> getTanks() {
+	public ArrayList<Tank> getTanks() {
 		return tanks;
 	}
 
@@ -114,13 +113,12 @@ public class TankClient extends Frame {
 		addWindowListener(new GameWindowListener());
 		setResizable(false);
 
-		tanks.add(new PlayerTank(100, 100, TANK_SIZE, TANK_SIZE, new PlayerTankController(
-				this), new PlayerTankView()));
+		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
+				new PlayerTankController(this), new PlayerTankView()));
 
-		explode = new Explode(200, 400, 56, 56, new ExplodeView());
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missile = new Missile(200, 200, 40, 40, new MissileController(this),
-				new MissileView(), Directions.RD);
+				new MissileView(), Directions.RD, false);
 		refreshThread = new RefreshThread();
 		refreshThread.start();
 	}
@@ -201,9 +199,12 @@ public class TankClient extends Frame {
 		backGroundLayer(g);
 		obtacle.getView().draw(g);
 		missile.getView().draw(g);
-		explode.getView().draw(g);
 
-		for (PlayerTank tank : tanks) {
+		for (Explode explode : explodes) {
+			explode.getView().draw(g);
+		}
+
+		for (Tank tank : tanks) {
 			tank.getView().draw(g);
 		}
 
@@ -216,13 +217,13 @@ public class TankClient extends Frame {
 	 *            ´°¿ÚµÄ»­±Ê
 	 */
 	private void backGroundLayer(Graphics g) {
-		//ÂÌÉ«±³¾°
+		// ÂÌÉ«±³¾°
 		// Color defColor = g.getColor();
 		// g.setColor(Color.GREEN);
 		// g.fillRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
 		// g.setColor(defColor);
-		
-		//Í¼Æ¬±³¾°
+
+		// Í¼Æ¬±³¾°
 		for (int x = 0; x < SCR_WIDTH; x += 256) {
 			for (int y = 0; y < SCR_HEIGHT; y += 256) {
 				g.drawImage(R.Drawable.backgroundImage, x, y, null);
