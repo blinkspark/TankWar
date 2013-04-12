@@ -138,13 +138,7 @@ public class TankClient extends Frame {
 		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
-			try {
-				refreshThread.setExitFlag(true);
-				refreshThread.join();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			System.exit(0);
+			exit();
 		}
 
 	}
@@ -246,6 +240,16 @@ public class TankClient extends Frame {
 		device.setFullScreenWindow(null);
 	}
 
+	private void exit() {
+		try {
+			refreshThread.setExitFlag(true);
+			refreshThread.join();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		System.exit(0);
+	}
+
 	/**
 	 * º¸≈Ãº‡Ã˝¿‡
 	 * 
@@ -290,7 +294,7 @@ public class TankClient extends Frame {
 				if (device.getFullScreenWindow() != null) {
 					closeFullScreen();
 				} else {
-					System.exit(0);
+					exit();
 				}
 				break;
 			case KeyEvent.VK_ENTER:
