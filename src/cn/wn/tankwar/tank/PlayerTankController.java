@@ -15,8 +15,8 @@ import cn.wn.tankwar.missile.MissileView;
  */
 public class PlayerTankController implements Controller {
 	private static final int SPEED = 4;
-	private Tank tank;
-	private TankClient tc;
+	protected Tank tank;
+	protected TankClient tc;
 
 	public PlayerTankController(TankClient tc) {
 		this.tc = tc;
