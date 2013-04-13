@@ -6,7 +6,12 @@ public class EnemyTankController extends PlayerTankController {
 
 	public EnemyTankController(TankClient tc) {
 		super(tc);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void move() {
+		//TODO
+		super.move();
 	}
 
 

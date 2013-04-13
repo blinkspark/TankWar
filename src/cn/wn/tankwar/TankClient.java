@@ -116,9 +116,9 @@ public class TankClient extends Frame {
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new PlayerTankController(this), new PlayerTankView(),true));
+				new PlayerTankController(this), new PlayerTankView(), true));
 		tanks.add(new Tank(40, 50, TANK_SIZE, TANK_SIZE,
-				new EnemyTankController(this), new EnemyTankView(),false));
+				new EnemyTankController(this), new EnemyTankView(), false));
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missile = new Missile(200, 200, 40, 40, new MissileController(this),
@@ -135,7 +135,6 @@ public class TankClient extends Frame {
 	 */
 	class GameWindowListener extends WindowAdapter {
 
-		
 		@Override
 		public void windowClosing(WindowEvent e) {
 			exit();
@@ -163,8 +162,14 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
-				for (Tank tank : tanks) {
-					tank.getController().move();
+				for (int i = 0; i < tanks.size(); i++) {
+					Tank tank = tanks.get(i);
+					if (tank.isAlive()) {
+						tank.getController().move();
+					} else {
+						tanks.remove(i);
+						i--;
+					}
 				}
 				missile.getController().move();
 				repaint();
@@ -344,7 +349,11 @@ public class TankClient extends Frame {
 				break;
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:
-				tanks.get(0).getController().fire();
+				for (Tank tank : tanks) {
+					if (tank.isGood()) {
+						tank.getController().fire();
+					}
+				}
 			default:
 				break;
 			}
