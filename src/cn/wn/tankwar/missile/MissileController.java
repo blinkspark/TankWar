@@ -79,7 +79,7 @@ public class MissileController implements Controller {
 			hit = true;
 		} else {
 			for (Tank tank : tc.getTanks()) {
-				if (missile.getRect().intersects(tank.getRect())) {
+				if (missile.getRect().intersects(tank.getRect())&&tank.isGood()!=missile.isGood()) {
 					hit = true;
 					tank.setAlive(false);
 					Explode explode = new Explode(0, 0, 56, 56, new ExplodeView());
