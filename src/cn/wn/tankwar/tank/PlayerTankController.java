@@ -14,6 +14,7 @@ import cn.wn.tankwar.missile.MissileView;
  * 
  */
 public class PlayerTankController implements Controller {
+	private static final int SPEED = 4;
 	private Tank tank;
 	private TankClient tc;
 
@@ -109,26 +110,27 @@ public class PlayerTankController implements Controller {
 	}
 
 	public void moveUp() {
-		tank.setY(tank.getY() - 5);
+		tank.setY(tank.getY() - SPEED);
 	}
 
 	public void moveDown() {
-		tank.setY(tank.getY() + 5);
+		tank.setY(tank.getY() + SPEED);
 	}
 
 	public void moveLeft() {
-		tank.setX(tank.getX() - 5);
+		tank.setX(tank.getX() - SPEED);
 	}
 
 	public void moveRight() {
-		tank.setX(tank.getX() + 5);
+		tank.setX(tank.getX() + SPEED);
 	}
 
 	public void fire() {
-		tc.missile = new Missile(tank.getX(), tank.getY(), 40, 40,
+		Missile missile = new Missile(tank.getX(), tank.getY(), 40, 40,
 				new MissileController(tc), new MissileView(),
 				tank.getDirection(),tank.isGood());
-		tc.missile.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
+		missile.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
+		tc.missiles.add(missile);
 
 	}
 

@@ -51,8 +51,8 @@ public class TankClient extends Frame {
 	private GraphicsDevice device = null;
 	private DisplayMode defaultDisplayMode = null;
 	public ArrayList<Tank> tanks = new ArrayList<>();
-	public Missile missile;
 	public ArrayList<Explode> explodes = new ArrayList<>();
+	public ArrayList<Missile> missiles = new ArrayList<>();
 
 	public TankClient() {
 		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
@@ -100,8 +100,8 @@ public class TankClient extends Frame {
 		return tanks;
 	}
 
-	public Missile getMissile() {
-		return missile;
+	public ArrayList<Missile> getMissiles() {
+		return missiles;
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class TankClient extends Frame {
 				new EnemyTankController(this), new EnemyTankView(), false));
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
-		missile = new Missile(200, 200, 40, 40, new MissileController(this),
-				new MissileView(), Directions.RD, false);
+		missiles.add(new Missile(200, 200, 40, 40, new MissileController(this),
+				new MissileView(), Directions.RD, false));
 		refreshThread = new RefreshThread();
 		refreshThread.start();
 	}
@@ -173,7 +173,14 @@ public class TankClient extends Frame {
 						i--;
 					}
 				}
-				missile.getController().move();
+				for (int i = 0; i < missiles.size(); i++) {
+					Missile missile = missiles.get(i);
+					if(missile.isAlive()){
+						missile.getController().move();
+					}else {
+						missiles.remove(i--);
+					}
+				}
 				repaint();
 				try {
 					Thread.sleep(REFRESH_SEQUENCE);
@@ -209,7 +216,9 @@ public class TankClient extends Frame {
 	public void paint(Graphics g) {
 		backGroundLayer(g);
 		obtacle.getView().draw(g);
-		missile.getView().draw(g);
+		for (Missile missile : missiles) {
+			missile.getView().draw(g);
+		}
 
 		for (Explode explode : explodes) {
 			explode.getView().draw(g);
@@ -352,7 +361,7 @@ public class TankClient extends Frame {
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:
 				for (Tank tank : tanks) {
-					if (tank.isGood()) {
+					 if (tank.isGood()) {
 						tank.getController().fire();
 					}
 				}

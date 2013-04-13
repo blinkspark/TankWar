@@ -14,6 +14,7 @@ import cn.wn.tankwar.tank.Tank;
  */
 public class MissileController implements Controller {
 
+	private static final int SPEED = 6;
 	private Missile missile;
 	private TankClient tc;
 
@@ -77,13 +78,20 @@ public class MissileController implements Controller {
 		boolean hit = false;
 		if (missile.getRect().intersects(tc.getObtacle().getRect())) {
 			hit = true;
+		}else if (missile.getX()<0||missile.getX()>tc.getWidth()-missile.getWidth()) {
+			hit = true;
+		}else if (missile.getY()<0||missile.getY()>tc.getHeight()-missile.getHeight()) {
+			hit = true;
 		} else {
 			for (Tank tank : tc.getTanks()) {
-				if (missile.getRect().intersects(tank.getRect())&&tank.isGood()!=missile.isGood()) {
+				if (missile.getRect().intersects(tank.getRect())
+						&& tank.isGood() != missile.isGood()) {
 					hit = true;
 					tank.setAlive(false);
-					Explode explode = new Explode(0, 0, 56, 56, new ExplodeView());
-					explode.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
+					Explode explode = new Explode(0, 0, 56, 56,
+							new ExplodeView());
+					explode.setCenter(tank.getCenterPoint().x,
+							tank.getCenterPoint().y);
 					tc.explodes.add(explode);
 				}
 			}
@@ -92,19 +100,19 @@ public class MissileController implements Controller {
 	}
 
 	private void moveRight() {
-		missile.setX(missile.getX() + 1);
+		missile.setX(missile.getX() + SPEED);
 	}
 
 	private void moveLeft() {
-		missile.setX(missile.getX() - 1);
+		missile.setX(missile.getX() - SPEED);
 	}
 
 	private void moveDown() {
-		missile.setY(missile.getY() + 1);
+		missile.setY(missile.getY() + SPEED);
 	}
 
 	private void moveUp() {
-		missile.setY(missile.getY() - 1);
+		missile.setY(missile.getY() - SPEED);
 	}
 
 }
