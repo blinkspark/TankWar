@@ -15,18 +15,21 @@ import javax.imageio.ImageIO;
 public class R {
 	public static class Drawable {
 
-		public static BufferedImage tankImage;
+		public static BufferedImage playerTankImage;
 		public static BufferedImage missileImage;
 		public static BufferedImage backgroundImage;
 		public static BufferedImage obtacleImage;
 		public static BufferedImage explodeImage;
+		public static BufferedImage enemyTankImage;
 
 		/**
 		 * 初始化方法,初始化资源类,要在程序的一开始调用
 		 */
 		public static void init() {
 			File tankImageFile = new File(System.getProperty("user.dir")
-					+ "\\res\\tank.png");
+					+ "\\res\\player_tank.png");
+			File enemyTankImageFile = new File(System.getProperty("user.dir")
+					+ "\\res\\enemy_tank.png");
 			File missileImageFile = new File(System.getProperty("user.dir")
 					+ "\\res\\missile.png");
 			File obtacleImageFile = new File(System.getProperty("user.dir")
@@ -37,7 +40,8 @@ public class R {
 					+ "\\res\\background.jpg");
 			try {
 				backgroundImage = ImageIO.read(backgroundImageFile);
-				tankImage = ImageIO.read(tankImageFile);
+				playerTankImage = ImageIO.read(tankImageFile);
+				enemyTankImage = ImageIO.read(enemyTankImageFile);
 				obtacleImage = ImageIO.read(obtacleImageFile);
 				explodeImage = ImageIO.read(explodeImageFile);
 				missileImage = ImageIO.read(missileImageFile);

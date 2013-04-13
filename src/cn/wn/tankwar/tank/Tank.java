@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import cn.wn.tankwar.Directions;
+import cn.wn.tankwar.interfaces.View;
 
 /**
  * 坦克模型类
@@ -25,7 +26,7 @@ public class Tank {
 	protected boolean good;
 	protected boolean alive;
 
-	protected PlayerTankView view;
+	protected View view;
 
 	protected int width;
 
@@ -50,7 +51,7 @@ public class Tank {
 	 *            视图
 	 */
 	public Tank(int x, int y, int width, int height, PlayerTankController controller,
-			PlayerTankView view) {
+			View view,boolean good) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -63,7 +64,7 @@ public class Tank {
 		this.centerPoint = new Point(x + width / 2, y + height / 2);
 		this.view.attach(this);
 		this.controller.attach(this);
-		good = true;
+		this.good= good;
 		alive = true;
 	}
 
@@ -108,7 +109,7 @@ public class Tank {
 	 * 
 	 * @return TankView
 	 */
-	public PlayerTankView getView() {
+	public View getView() {
 		return view;
 	}
 

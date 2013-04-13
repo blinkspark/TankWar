@@ -18,4 +18,11 @@ public class ObtacleView implements View{
 		g.drawImage(R.Drawable.obtacleImage, obtacle.getX(), obtacle.getY(), null);		
 	}
 
+	@Override
+	public void attach(Object object) {
+		attach((Obtacle)object);
+		
+	}
+
+
 }

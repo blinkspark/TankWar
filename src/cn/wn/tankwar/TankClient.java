@@ -19,6 +19,8 @@ import cn.wn.tankwar.missile.MissileView;
 import cn.wn.tankwar.obtacle.Obtacle;
 import cn.wn.tankwar.obtacle.ObtacleView;
 import cn.wn.tankwar.resource.R;
+import cn.wn.tankwar.tank.EnemyTankController;
+import cn.wn.tankwar.tank.EnemyTankView;
 import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.PlayerTankController;
 import cn.wn.tankwar.tank.PlayerTankView;
@@ -114,7 +116,9 @@ public class TankClient extends Frame {
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new PlayerTankController(this), new PlayerTankView()));
+				new PlayerTankController(this), new PlayerTankView(),true));
+		tanks.add(new Tank(40, 50, TANK_SIZE, TANK_SIZE,
+				new EnemyTankController(this), new EnemyTankView(),false));
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missile = new Missile(200, 200, 40, 40, new MissileController(this),
@@ -131,9 +135,7 @@ public class TankClient extends Frame {
 	 */
 	class GameWindowListener extends WindowAdapter {
 
-		/**
-		 * 程序退出方法
-		 */
+		
 		@Override
 		public void windowClosing(WindowEvent e) {
 			exit();
@@ -161,7 +163,9 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
-				tanks.get(0).getController().move();
+				for (Tank tank : tanks) {
+					tank.getController().move();
+				}
 				missile.getController().move();
 				repaint();
 				try {
@@ -241,6 +245,9 @@ public class TankClient extends Frame {
 		device.setFullScreenWindow(null);
 	}
 
+	/**
+	 * 程序退出方法
+	 */
 	private void exit() {
 		try {
 			refreshThread.setExitFlag(true);
@@ -267,16 +274,24 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_UP:
-				tanks.get(0).setUpPressed(true);
+				for (Tank tank : tanks) {
+					tank.setUpPressed(true);
+				}
 				break;
 			case KeyEvent.VK_DOWN:
-				tanks.get(0).setDownPressed(true);
+				for (Tank tank : tanks) {
+					tank.setDownPressed(true);
+				}
 				break;
 			case KeyEvent.VK_LEFT:
-				tanks.get(0).setLeftPressed(true);
+				for (Tank tank : tanks) {
+					tank.setLeftPressed(true);
+				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				tanks.get(0).setRightPressed(true);
+				for (Tank tank : tanks) {
+					tank.setRightPressed(true);
+				}
 				break;
 
 			default:
@@ -308,16 +323,24 @@ public class TankClient extends Frame {
 				}
 				break;
 			case KeyEvent.VK_UP:
-				tanks.get(0).setUpPressed(false);
+				for (Tank tank : tanks) {
+					tank.setUpPressed(false);
+				}
 				break;
 			case KeyEvent.VK_DOWN:
-				tanks.get(0).setDownPressed(false);
+				for (Tank tank : tanks) {
+					tank.setDownPressed(false);
+				}
 				break;
 			case KeyEvent.VK_LEFT:
-				tanks.get(0).setLeftPressed(false);
+				for (Tank tank : tanks) {
+					tank.setLeftPressed(false);
+				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				tanks.get(0).setRightPressed(false);
+				for (Tank tank : tanks) {
+					tank.setRightPressed(false);
+				}
 				break;
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:

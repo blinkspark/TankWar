@@ -31,4 +31,10 @@ public class ExplodeView implements View {
 		}
 	}
 
+	@Override
+	public void attach(Object object) {
+		attach((Explode)object);
+	}
+
+
 }
