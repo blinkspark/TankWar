@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 import cn.wn.tankwar.explode.Explode;
 import cn.wn.tankwar.missile.Missile;
@@ -45,6 +46,7 @@ public class TankClient extends Frame {
 	public static final int SCR_HEIGHT = 600;
 	public static final int SCR_WIDTH = 800;
 
+	public Random random = new Random();
 	public Obtacle obtacle;
 	private GraphicsDevice device = null;
 	private DisplayMode defaultDisplayMode = null;
