@@ -16,7 +16,7 @@ import cn.wn.tankwar.missile.MissileView;
  * 
  */
 public class PlayerTankController implements Controller {
-	private static final int SPEED = 4;
+	protected static final int SPEED = 4;
 	protected Tank tank;
 	protected TankClient tc;
 	
@@ -30,15 +30,15 @@ public class PlayerTankController implements Controller {
 	 */
 	public void move() {
 		if (tank.upPressed) {
-			tank.getController().moveUp();
+			moveUp(SPEED);
 			tank.setDirection(Directions.U);
 		}
 		if (tank.downPressed) {
-			tank.getController().moveDown();
+			moveDown(SPEED);
 			tank.setDirection(Directions.D);
 		}
 		if (tank.leftPressed) {
-			tank.getController().moveLeft();
+			moveLeft(SPEED);
 			if (tank.upPressed) {
 				tank.setDirection(Directions.LU);
 			} else if (tank.downPressed) {
@@ -48,7 +48,7 @@ public class PlayerTankController implements Controller {
 			}
 		}
 		if (tank.rightPressed) {
-			tank.getController().moveRight();
+			moveRight(SPEED);
 			if (tank.upPressed) {
 				tank.setDirection(Directions.RU);
 			} else if (tank.downPressed) {
@@ -65,22 +65,22 @@ public class PlayerTankController implements Controller {
 	/**
 	 * 检测到碰撞后取消移动动作
 	 */
-	private void unMove() {
+	protected void unMove() {
 		if (tank.isUpPressed()) {
-			moveDown();
+			moveDown(SPEED);
 		}
 		if (tank.isDownPressed()) {
-			moveUp();
+			moveUp(SPEED);
 		}
 		if (tank.isLeftPressed()) {
-			moveRight();
+			moveRight(SPEED);
 		}
 		if (tank.isRightPressed()) {
-			moveLeft();
+			moveLeft(SPEED);
 		}
 	}
 
-	private boolean isObstruct() {
+	protected boolean isObstruct() {
 		boolean obstruct = false;
 		if (tank.getRect().intersects(tc.getObtacle().getRect())) {
 			obstruct = true;
@@ -112,20 +112,20 @@ public class PlayerTankController implements Controller {
 		this.tank = tank;
 	}
 
-	public void moveUp() {
-		tank.setY(tank.getY() - SPEED);
+	public void moveUp(int speed) {
+		tank.setY(tank.getY() - speed);
 	}
 
-	public void moveDown() {
-		tank.setY(tank.getY() + SPEED);
+	public void moveDown(int speed) {
+		tank.setY(tank.getY() + speed);
 	}
 
-	public void moveLeft() {
-		tank.setX(tank.getX() - SPEED);
+	public void moveLeft(int speed) {
+		tank.setX(tank.getX() - speed);
 	}
 
-	public void moveRight() {
-		tank.setX(tank.getX() + SPEED);
+	public void moveRight(int speed) {
+		tank.setX(tank.getX() + speed);
 	}
 
 	public void fire() {
