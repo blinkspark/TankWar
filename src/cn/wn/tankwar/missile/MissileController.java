@@ -87,7 +87,7 @@ public class MissileController implements Controller {
 				if (missile.getRect().intersects(tank.getRect())
 						&& tank.isGood() != missile.isGood()) {
 					hit = true;
-					tank.getController().beHited();
+					tank.getController().beingHit();
 				}
 			}
 		}

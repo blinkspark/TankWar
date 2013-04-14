@@ -137,8 +137,8 @@ public class PlayerTankController implements Controller {
 
 	}
 
-	public void beHited() {
-		tank.damagedHealth();
+	public void beingHit() {
+		tank.beHited();
 		if(tank.getHealth()<=0){
 			tank.setAlive(false);
 			Explode explode = new Explode(0, 0, 56, 56,

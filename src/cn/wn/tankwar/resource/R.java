@@ -15,7 +15,10 @@ import javax.imageio.ImageIO;
 public class R {
 	public static class Drawable {
 
-		public static BufferedImage playerTankImage;
+		public static BufferedImage playerTank3Image;
+		public static BufferedImage playerTank2Image;
+		public static BufferedImage playerTank1Image;
+		public static BufferedImage playerTankDeadImage;
 		public static BufferedImage missileImage;
 		public static BufferedImage backgroundImage;
 		public static BufferedImage obtacleImage;
@@ -26,8 +29,14 @@ public class R {
 		 * 初始化方法,初始化资源类,要在程序的一开始调用
 		 */
 		public static void init() {
-			File tankImageFile = new File(System.getProperty("user.dir")
-					+ "\\res\\player_tank.png");
+			File playerTankImage3File = new File(System.getProperty("user.dir")
+					+ "\\res\\player_tank_3.png");
+			File playerTankImage2File = new File(System.getProperty("user.dir")
+					+ "\\res\\player_tank_2.png");
+			File playerTankImage1File = new File(System.getProperty("user.dir")
+					+ "\\res\\player_tank_1.png");
+			File playerTankImageDeadFile = new File(System.getProperty("user.dir")
+					+ "\\res\\player_tank_dead.png");
 			File enemyTankImageFile = new File(System.getProperty("user.dir")
 					+ "\\res\\enemy_tank.png");
 			File missileImageFile = new File(System.getProperty("user.dir")
@@ -40,7 +49,10 @@ public class R {
 					+ "\\res\\background.jpg");
 			try {
 				backgroundImage = ImageIO.read(backgroundImageFile);
-				playerTankImage = ImageIO.read(tankImageFile);
+				playerTank3Image = ImageIO.read(playerTankImage3File);
+				playerTank2Image = ImageIO.read(playerTankImage2File);
+				playerTank1Image = ImageIO.read(playerTankImage1File);
+				playerTankDeadImage = ImageIO.read(playerTankImageDeadFile);
 				enemyTankImage = ImageIO.read(enemyTankImageFile);
 				obtacleImage = ImageIO.read(obtacleImageFile);
 				explodeImage = ImageIO.read(explodeImageFile);

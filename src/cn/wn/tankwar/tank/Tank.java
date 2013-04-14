@@ -306,7 +306,7 @@ public class Tank {
 		return health;
 	}
 
-	public void damagedHealth() {
+	public void beHited() {
 		this.health--;
 	}
 
