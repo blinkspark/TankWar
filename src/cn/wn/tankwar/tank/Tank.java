@@ -25,6 +25,7 @@ public class Tank {
 	protected boolean upPressed = false;
 	protected boolean good;
 	protected boolean alive;
+	protected int health;
 
 	protected View view;
 
@@ -51,7 +52,7 @@ public class Tank {
 	 *            йсм╪
 	 */
 	public Tank(int x, int y, int width, int height, PlayerTankController controller,
-			View view,boolean good) {
+			View view,boolean good,int health) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -66,6 +67,7 @@ public class Tank {
 		this.controller.attach(this);
 		this.good= good;
 		alive = true;
+		this.health = health;
 	}
 
 	/**
@@ -298,6 +300,14 @@ public class Tank {
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void damagedHealth() {
+		this.health--;
 	}
 
 }

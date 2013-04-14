@@ -34,6 +34,10 @@ import cn.wn.tankwar.tank.PlayerTankView;
  */
 public class TankClient extends Frame {
 
+	private static final int ENEMY_TANK_HEALTH = 1;
+
+	private static final int PLAYER_TANK_HEALTH = 3;
+
 	private static final int TANK_SIZE = 48;
 
 	/**
@@ -118,9 +122,9 @@ public class TankClient extends Frame {
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new PlayerTankController(this), new PlayerTankView(), true));
+				new PlayerTankController(this), new PlayerTankView(), true,PLAYER_TANK_HEALTH));
 		tanks.add(new Tank(40, 50, TANK_SIZE, TANK_SIZE,
-				new EnemyTankController(this), new EnemyTankView(), false));
+				new EnemyTankController(this), new EnemyTankView(), false,ENEMY_TANK_HEALTH));
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missiles.add(new Missile(200, 200, 40, 40, new MissileController(this),

@@ -2,6 +2,8 @@ package cn.wn.tankwar.tank;
 
 import cn.wn.tankwar.Directions;
 import cn.wn.tankwar.TankClient;
+import cn.wn.tankwar.explode.Explode;
+import cn.wn.tankwar.explode.ExplodeView;
 import cn.wn.tankwar.interfaces.Controller;
 import cn.wn.tankwar.missile.Missile;
 import cn.wn.tankwar.missile.MissileController;
@@ -17,6 +19,7 @@ public class PlayerTankController implements Controller {
 	private static final int SPEED = 4;
 	protected Tank tank;
 	protected TankClient tc;
+	
 
 	public PlayerTankController(TankClient tc) {
 		this.tc = tc;
@@ -132,6 +135,18 @@ public class PlayerTankController implements Controller {
 		missile.setCenter(tank.getCenterPoint().x, tank.getCenterPoint().y);
 		tc.missiles.add(missile);
 
+	}
+
+	public void beHited() {
+		tank.damagedHealth();
+		if(tank.getHealth()<=0){
+			tank.setAlive(false);
+			Explode explode = new Explode(0, 0, 56, 56,
+					new ExplodeView());
+			explode.setCenter(tank.getCenterPoint().x,
+					tank.getCenterPoint().y);
+			tc.explodes.add(explode);
+		}
 	}
 
 }
