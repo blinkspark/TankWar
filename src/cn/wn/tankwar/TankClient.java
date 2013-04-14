@@ -122,9 +122,14 @@ public class TankClient extends Frame {
 		setResizable(false);
 
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
-				new PlayerTankController(this), new PlayerTankView(), true,PLAYER_TANK_HEALTH));
-		tanks.add(new Tank(40, 50, TANK_SIZE, TANK_SIZE,
-				new EnemyTankController(this), new EnemyTankView(), false,ENEMY_TANK_HEALTH));
+				new PlayerTankController(this), new PlayerTankView(), true,
+				PLAYER_TANK_HEALTH));
+		for (int i = 0; i < 5; i++) {
+			tanks.add(new Tank(random.nextInt(SCR_WIDTH), random
+					.nextInt(SCR_HEIGHT), TANK_SIZE, TANK_SIZE,
+					new EnemyTankController(this), new EnemyTankView(), false,
+					ENEMY_TANK_HEALTH));
+		}
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
 		missiles.add(new Missile(200, 200, 40, 40, new MissileController(this),
@@ -168,6 +173,14 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
+				if(tanks.size()<4){
+					for (int i = 0; i < 3; i++) {
+						tanks.add(new Tank(random.nextInt(SCR_WIDTH-TANK_SIZE), random
+								.nextInt(SCR_HEIGHT-TANK_SIZE), TANK_SIZE, TANK_SIZE,
+								new EnemyTankController(TankClient.this), new EnemyTankView(), false,
+								ENEMY_TANK_HEALTH));
+					}
+				}
 				for (int i = 0; i < tanks.size(); i++) {
 					Tank tank = tanks.get(i);
 					if (tank.isAlive()) {
@@ -179,9 +192,9 @@ public class TankClient extends Frame {
 				}
 				for (int i = 0; i < missiles.size(); i++) {
 					Missile missile = missiles.get(i);
-					if(missile.isAlive()){
+					if (missile.isAlive()) {
 						missile.getController().move();
-					}else {
+					} else {
 						missiles.remove(i--);
 					}
 				}
@@ -365,7 +378,7 @@ public class TankClient extends Frame {
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:
 				for (Tank tank : tanks) {
-					 if (tank.isGood()) {
+					if (tank.isGood()) {
 						tank.getController().fire();
 					}
 				}

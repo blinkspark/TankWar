@@ -19,6 +19,9 @@ public class EnemyTankController extends PlayerTankController {
 	public void move() {
 		// TODO
 		initTarget();
+		if(targeTank==null){
+			return;
+		}
 		getTargetDirection();
 		if (tank.upPressed) {
 			tank.getController().moveUp(SPEED);
@@ -38,6 +41,7 @@ public class EnemyTankController extends PlayerTankController {
 		if (random.nextInt(1000) > 990) {
 			fire();
 		}
+		targeTank =null;
 	}
 
 	private Directions getTargetDirection() {
