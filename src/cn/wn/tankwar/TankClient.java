@@ -125,8 +125,8 @@ public class TankClient extends Frame {
 				new PlayerTankController(this), new PlayerTankView(), true,
 				PLAYER_TANK_HEALTH));
 		for (int i = 0; i < 5; i++) {
-			tanks.add(new Tank(random.nextInt(SCR_WIDTH), random
-					.nextInt(SCR_HEIGHT), TANK_SIZE, TANK_SIZE,
+			tanks.add(new Tank(random.nextInt(SCR_WIDTH-TANK_SIZE), random
+					.nextInt(SCR_HEIGHT-TANK_SIZE), TANK_SIZE, TANK_SIZE,
 					new EnemyTankController(this), new EnemyTankView(), false,
 					ENEMY_TANK_HEALTH));
 		}

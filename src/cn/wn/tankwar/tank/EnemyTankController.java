@@ -46,14 +46,14 @@ public class EnemyTankController extends PlayerTankController {
 	}
 
 	private Directions getTargetDirection() {
-		if (targeTank.getCenterPoint().x - tank.getCenterPoint().x > tank
-				.getWidth()) {
+		if (targeTank.getCenterPoint().x - tank.getCenterPoint().x >= tank
+				.getWidth()/2) {
 			tank.setRightPressed(true);
 			tank.setLeftPressed(false);
-		} else if (targeTank.getCenterPoint().x - tank.getCenterPoint().x <= tank
-				.getWidth()
-				&& targeTank.getCenterPoint().x - tank.getCenterPoint().x >= -tank
-						.getWidth()) {
+		} else if (targeTank.getCenterPoint().x - tank.getCenterPoint().x < tank
+				.getWidth()/2
+				&& targeTank.getCenterPoint().x - tank.getCenterPoint().x > -tank
+						.getWidth()/2) {
 			tank.setLeftPressed(false);
 			tank.setRightPressed(false);
 		} else {
@@ -61,14 +61,14 @@ public class EnemyTankController extends PlayerTankController {
 			tank.setLeftPressed(true);
 		}
 
-		if (targeTank.getCenterPoint().y - tank.getCenterPoint().y > tank
-				.getHeight()) {
+		if (targeTank.getCenterPoint().y - tank.getCenterPoint().y >= tank
+				.getHeight()/2) {
 			tank.setDownPressed(true);
 			tank.setUpPressed(false);
-		} else if (targeTank.getCenterPoint().y - tank.getCenterPoint().y <= tank
-				.getHeight()
-				&& targeTank.getCenterPoint().y - tank.getCenterPoint().y >= -tank
-						.getHeight()) {
+		} else if (targeTank.getCenterPoint().y - tank.getCenterPoint().y < tank
+				.getHeight()/2
+				&& targeTank.getCenterPoint().y - tank.getCenterPoint().y > -tank
+						.getHeight()/2) {
 			tank.setUpPressed(false);
 			tank.setDownPressed(false);
 		} else {
