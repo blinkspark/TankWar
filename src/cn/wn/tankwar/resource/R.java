@@ -24,6 +24,7 @@ public class R {
 		public static BufferedImage obtacleImage;
 		public static BufferedImage explodeImage;
 		public static BufferedImage enemyTankImage;
+		public static BufferedImage shieldImage;
 
 		/**
 		 * 初始化方法,初始化资源类,要在程序的一开始调用
@@ -47,6 +48,8 @@ public class R {
 					+ "\\res\\explode.png");
 			File backgroundImageFile = new File(System.getProperty("user.dir")
 					+ "\\res\\background.jpg");
+			File shieldImageFile = new File(System.getProperty("user.dir")
+					+ "\\res\\shield.png");
 			try {
 				backgroundImage = ImageIO.read(backgroundImageFile);
 				playerTank3Image = ImageIO.read(playerTankImage3File);
@@ -57,6 +60,7 @@ public class R {
 				obtacleImage = ImageIO.read(obtacleImageFile);
 				explodeImage = ImageIO.read(explodeImageFile);
 				missileImage = ImageIO.read(missileImageFile);
+				shieldImage = ImageIO.read(shieldImageFile);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
