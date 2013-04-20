@@ -57,11 +57,13 @@ public class TankClient extends Frame {
 	public ArrayList<Tank> tanks = new ArrayList<>();
 	public ArrayList<Explode> explodes = new ArrayList<>();
 	public ArrayList<Missile> missiles = new ArrayList<>();
+	public boolean playerTankAlive;
 
 	public TankClient() {
 		device = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getDefaultScreenDevice();
 		defaultDisplayMode = device.getDisplayMode();
+		playerTankAlive = true;
 	}
 
 	private Image bufferImage = null;
@@ -189,6 +191,9 @@ public class TankClient extends Frame {
 						tank.getController().move();
 					} else {
 						tanks.remove(i);
+						if (tank.isGood()) {
+							playerTankAlive = false;
+						}
 						i--;
 					}
 				}
@@ -345,6 +350,15 @@ public class TankClient extends Frame {
 		public void keyReleased(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
+			case KeyEvent.VK_F2:
+				if (!playerTankAlive) {
+					tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
+							random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+							TANK_SIZE,
+							new PlayerTankController(TankClient.this),
+							new PlayerTankView(), true, PLAYER_TANK_HEALTH));
+				}
+				break;
 			case KeyEvent.VK_W:
 				for (Tank tank : tanks) {
 					if (tank.isGood()) {

@@ -5,7 +5,7 @@ import java.util.Date;
 import cn.wn.tankwar.tank.Tank;
 
 public class Shield {
-	private static final int COOL_DOWN_S = 10;
+	private static final int COOL_DOWN_S = 2;
 	private Tank tank;
 	private boolean on;
 	private Date coolDownDate;
