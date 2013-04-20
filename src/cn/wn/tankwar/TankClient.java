@@ -234,7 +234,9 @@ public class TankClient extends Frame {
 		backGroundLayer(g);
 		obtacle.getView().draw(g);
 		for (Missile missile : missiles) {
-			missile.getView().draw(g);
+			synchronized (missiles) {
+				missile.getView().draw(g);
+			}
 		}
 
 		for (Explode explode : explodes) {
@@ -242,7 +244,9 @@ public class TankClient extends Frame {
 		}
 
 		for (Tank tank : tanks) {
-			tank.getView().draw(g);
+			synchronized (tanks) {
+				tank.getView().draw(g);
+			}
 		}
 
 	}
