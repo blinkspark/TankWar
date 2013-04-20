@@ -31,10 +31,10 @@ public class Shield {
 			Date curDate = new Date();
 			if (curDate.after(coolDownDate)) {
 				this.on = on;
-				coolDownDate.setTime(curDate.getTime() + COOL_DOWN_S * 1000);
 			}
 		} else {
 			this.on = on;
+			coolDownDate.setTime(new Date().getTime() + COOL_DOWN_S * 1000);
 		}
 	}
 

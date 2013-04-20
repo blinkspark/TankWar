@@ -125,8 +125,8 @@ public class TankClient extends Frame {
 				new PlayerTankController(this), new PlayerTankView(), true,
 				PLAYER_TANK_HEALTH));
 		for (int i = 0; i < 5; i++) {
-			tanks.add(new Tank(random.nextInt(SCR_WIDTH-TANK_SIZE), random
-					.nextInt(SCR_HEIGHT-TANK_SIZE), TANK_SIZE, TANK_SIZE,
+			tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE), random
+					.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE, TANK_SIZE,
 					new EnemyTankController(this), new EnemyTankView(), false,
 					ENEMY_TANK_HEALTH));
 		}
@@ -173,12 +173,14 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
-				if(tanks.size()<4){
+				if (tanks.size() < 4) {
 					for (int i = 0; i < 3; i++) {
-						tanks.add(new Tank(random.nextInt(SCR_WIDTH-TANK_SIZE), random
-								.nextInt(SCR_HEIGHT-TANK_SIZE), TANK_SIZE, TANK_SIZE,
-								new EnemyTankController(TankClient.this), new EnemyTankView(), false,
-								ENEMY_TANK_HEALTH));
+						tanks.add(new Tank(random
+								.nextInt(SCR_WIDTH - TANK_SIZE), random
+								.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+								TANK_SIZE, new EnemyTankController(
+										TankClient.this), new EnemyTankView(),
+								false, ENEMY_TANK_HEALTH));
 					}
 				}
 				for (int i = 0; i < tanks.size(); i++) {
@@ -233,8 +235,8 @@ public class TankClient extends Frame {
 	public void paint(Graphics g) {
 		backGroundLayer(g);
 		obtacle.getView().draw(g);
-		for (Missile missile : missiles) {
-			synchronized (missiles) {
+		synchronized (missiles) {
+			for (Missile missile : missiles) {
 				missile.getView().draw(g);
 			}
 		}
@@ -243,8 +245,8 @@ public class TankClient extends Frame {
 			explode.getView().draw(g);
 		}
 
-		for (Tank tank : tanks) {
-			synchronized (tanks) {
+		synchronized (tanks) {
+			for (Tank tank : tanks) {
 				tank.getView().draw(g);
 			}
 		}
@@ -345,7 +347,7 @@ public class TankClient extends Frame {
 			switch (keyCode) {
 			case KeyEvent.VK_W:
 				for (Tank tank : tanks) {
-					if(tank.isGood()){
+					if (tank.isGood()) {
 						tank.getController().shieldOn();
 					}
 				}
