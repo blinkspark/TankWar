@@ -339,6 +339,13 @@ public class TankClient extends Frame {
 		public void keyReleased(KeyEvent e) {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
+			case KeyEvent.VK_W:
+				for (Tank tank : tanks) {
+					if(tank.isGood()){
+						tank.getController().shieldOn();
+					}
+				}
+				break;
 			case KeyEvent.VK_ESCAPE:
 				if (device.getFullScreenWindow() != null) {
 					closeFullScreen();

@@ -16,13 +16,11 @@ public class ObtacleView implements View{
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(R.Drawable.obtacleImage, obtacle.getX(), obtacle.getY(), null);	
-		g.drawImage(R.Drawable.shieldImage, 70, 70, null);
 	}
 
 	@Override
 	public void attach(Object object) {
 		attach((Obtacle)object);
-		
 	}
 
 

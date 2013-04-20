@@ -107,6 +107,11 @@ public class PlayerTankView implements View {
 		default:
 			break;
 		}
+		
+		if (tank.getShield().isOn()) {
+			tank.getShield().getView().draw(g);
+		}
+		
 	}
 
 	@Override

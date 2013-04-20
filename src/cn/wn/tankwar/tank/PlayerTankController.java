@@ -149,4 +149,8 @@ public class PlayerTankController implements Controller {
 		}
 	}
 
+	public void shieldOn() {
+		tank.getShield().setOn(true);
+	}
+
 }

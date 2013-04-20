@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import cn.wn.tankwar.Directions;
 import cn.wn.tankwar.interfaces.View;
+import cn.wn.tankwar.skill.Shield;
 
 /**
  * 坦克模型类
@@ -26,6 +27,7 @@ public class Tank {
 	protected boolean good;
 	protected boolean alive;
 	protected int health;
+	protected Shield shield;
 
 	protected View view;
 
@@ -68,6 +70,7 @@ public class Tank {
 		this.good= good;
 		alive = true;
 		this.health = health;
+		shield = new Shield(this);
 	}
 
 	/**
@@ -307,7 +310,15 @@ public class Tank {
 	}
 
 	public void beHited() {
-		this.health--;
+		if (shield.isOn()) {
+			shield.setOn(false);
+		}else {
+			this.health--;
+		}
+	}
+
+	public Shield getShield() {
+		return shield;
 	}
 
 }
