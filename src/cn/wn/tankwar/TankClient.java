@@ -115,6 +115,7 @@ public class TankClient extends Frame {
 	 */
 	public void launchFrame() {
 		R.Drawable.init();
+		R.Audio.init();
 		setTitle("TankWar");
 		setLocation(100, 100);
 		setSize(SCR_WIDTH, SCR_HEIGHT);
@@ -138,6 +139,8 @@ public class TankClient extends Frame {
 				new MissileView(), Directions.RD, false));
 		refreshThread = new RefreshThread();
 		refreshThread.start();
+	
+ 		R.Audio.bgmAudioClip.loop();
 	}
 
 	/**
@@ -352,6 +355,7 @@ public class TankClient extends Frame {
 			switch (keyCode) {
 			case KeyEvent.VK_F2:
 				if (!playerTankAlive) {
+					playerTankAlive = true;
 					tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
 							random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
 							TANK_SIZE,

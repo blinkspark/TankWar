@@ -1,8 +1,12 @@
 package cn.wn.tankwar.resource;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +17,22 @@ import javax.imageio.ImageIO;
  * 
  */
 public class R {
+	public static class Audio{
+		public static AudioClip bgmAudioClip;
+		public static void init() {
+			new Audio();
+		}
+		public Audio() {
+			String addr = "file:\\"+System.getProperty("user.dir")+"\\res\\bgm.mid";
+			try {
+				URL bgmUrl = new URL(addr);
+				bgmAudioClip = Applet.newAudioClip(bgmUrl);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	public static class Drawable {
 
 		public static BufferedImage playerTank3Image;
