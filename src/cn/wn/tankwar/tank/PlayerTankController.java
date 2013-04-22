@@ -67,16 +67,16 @@ public class PlayerTankController implements Controller {
 	 */
 	protected void unMove() {
 		if (tank.isUpPressed()) {
-			moveDown(SPEED);
+			moveDown(SPEED*2);
 		}
 		if (tank.isDownPressed()) {
-			moveUp(SPEED);
+			moveUp(SPEED*2);
 		}
 		if (tank.isLeftPressed()) {
-			moveRight(SPEED);
+			moveRight(SPEED*2);
 		}
 		if (tank.isRightPressed()) {
-			moveLeft(SPEED);
+			moveLeft(SPEED*2);
 		}
 	}
 

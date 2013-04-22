@@ -17,7 +17,6 @@ public class ShadowCloneTankController extends PlayerTankController {
 	public void shieldOn() {
 		//Do Nothing
 	}
-	
-	
+
 
 }
