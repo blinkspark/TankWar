@@ -52,54 +52,54 @@ public class PlayerTankView implements View {
 		Graphics2D g2d = (Graphics2D) g;
 		switch (tank.getDirection()) {
 		case U:
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			break;
 		case D:
 			g2d.rotate(Math.toRadians(180), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(-180), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case L:
 			g2d.rotate(Math.toRadians(-90), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(90), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case R:
 			g2d.rotate(Math.toRadians(90), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(-90), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case LU:
 			g2d.rotate(Math.toRadians(-45), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(45), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case RU:
 			g2d.rotate(Math.toRadians(45), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(-45), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case LD:
 			g2d.rotate(Math.toRadians(-135), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(135), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
 		case RD:
 			g2d.rotate(Math.toRadians(135), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
-			g.drawImage(image, tank.getX(), tank.getY(), null);
+			drawTank(g, image);
 			g2d.rotate(Math.toRadians(-135), tank.getX() + tank.getWidth() / 2,
 					tank.getY() + tank.getHeight() / 2);
 			break;
@@ -112,6 +112,10 @@ public class PlayerTankView implements View {
 			tank.getShield().getView().draw(g);
 		}
 		
+	}
+
+	public void drawTank(Graphics g, Image image) {
+		g.drawImage(image, tank.getX(), tank.getY(), null);
 	}
 
 	@Override

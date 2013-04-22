@@ -15,16 +15,14 @@ import java.util.Random;
 
 import cn.wn.tankwar.explode.Explode;
 import cn.wn.tankwar.missile.Missile;
-import cn.wn.tankwar.missile.MissileController;
-import cn.wn.tankwar.missile.MissileView;
 import cn.wn.tankwar.obtacle.Obtacle;
 import cn.wn.tankwar.obtacle.ObtacleView;
 import cn.wn.tankwar.resource.R;
 import cn.wn.tankwar.tank.EnemyTankController;
 import cn.wn.tankwar.tank.EnemyTankView;
-import cn.wn.tankwar.tank.Tank;
 import cn.wn.tankwar.tank.PlayerTankController;
 import cn.wn.tankwar.tank.PlayerTankView;
+import cn.wn.tankwar.tank.Tank;
 
 /**
  * Ö÷´°¿ÚÀà
@@ -137,8 +135,6 @@ public class TankClient extends Frame {
 		}
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
-		missiles.add(new Missile(200, 200, 40, 40, new MissileController(this),
-				new MissileView(), Directions.RD, false));
 		refreshThread = new RefreshThread();
 		refreshThread.start();
 
@@ -169,6 +165,7 @@ public class TankClient extends Frame {
 	class RefreshThread extends Thread {
 
 		private boolean exit = false;
+		private boolean	pause = true;
 
 		public void setExitFlag(boolean exit) {
 			this.exit = exit;
@@ -180,6 +177,14 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
+				if (pause) {
+					try {
+						Thread.sleep(REFRESH_SEQUENCE);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					continue;
+				}
 				synchronized (tanks) {
 					if (getAICount(tanks)<3) {
 						for (int i = 0; i < 3; i++) {
@@ -229,6 +234,14 @@ public class TankClient extends Frame {
 				}
 			}
 			return count;
+		}
+
+		public boolean isPause() {
+			return pause;
+		}
+
+		public void setPause(boolean pause) {
+			this.pause = pause;
 		}
 
 	}
@@ -419,6 +432,8 @@ public class TankClient extends Frame {
 					} else {
 						closeFullScreen();
 					}
+				}else {
+					refreshThread.setPause(!refreshThread.isPause());
 				}
 				break;
 			case KeyEvent.VK_UP:
