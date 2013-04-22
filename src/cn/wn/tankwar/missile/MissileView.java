@@ -96,8 +96,9 @@ public class MissileView implements View {
 			g.drawImage(R.Drawable.missileImage, missile.getX(),
 					missile.getY(), missile.getX() + missile.getWidth(),
 					missile.getY() + missile.getHeight(), currentAnimaStage
-							* missile.getWidth(), 0, currentAnimaStage
-							* missile.getWidth() + missile.getWidth(),
+							* R.Drawable.missileImage.getHeight(), 0,
+					currentAnimaStage * R.Drawable.missileImage.getHeight()
+							+ R.Drawable.missileImage.getHeight(),
 					missile.getHeight(), null);
 			currentAnimaStage++;
 		}
@@ -105,7 +106,7 @@ public class MissileView implements View {
 
 	@Override
 	public void attach(Object object) {
-		attach((Missile)object);
+		attach((Missile) object);
 	}
 
 }
