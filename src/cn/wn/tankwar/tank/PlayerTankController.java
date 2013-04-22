@@ -1,5 +1,7 @@
 package cn.wn.tankwar.tank;
 
+import java.util.Date;
+
 import cn.wn.tankwar.Directions;
 import cn.wn.tankwar.TankClient;
 import cn.wn.tankwar.explode.Explode;
@@ -17,8 +19,10 @@ import cn.wn.tankwar.missile.MissileView;
  */
 public class PlayerTankController implements Controller {
 	protected static final int SPEED = 4;
+	private static final int SHADOW_CLONE_COOL_DOWN_S = 10;
 	protected Tank tank;
 	protected TankClient tc;
+	private Date shadowCloneCoolDownDate = new Date();
 	
 
 	public PlayerTankController(TankClient tc) {
@@ -154,11 +158,15 @@ public class PlayerTankController implements Controller {
 	}
 
 	public void shadowClone() {
-		synchronized (tc.getTanks()) {
-			tc.getTanks().add(new Tank(tank.getX()-tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
-			tc.getTanks().add(new Tank(tank.getX()+tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
-			tc.getTanks().add(new Tank(tank.getX(), tank.getY()+tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
-			tc.getTanks().add(new Tank(tank.getX(), tank.getY()-tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+		Date curDate = new Date();
+		if(curDate.after(shadowCloneCoolDownDate)){
+			synchronized (tc.getTanks()) {
+				tc.getTanks().add(new Tank(tank.getX()-tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+				tc.getTanks().add(new Tank(tank.getX()+tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+				tc.getTanks().add(new Tank(tank.getX(), tank.getY()+tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+				tc.getTanks().add(new Tank(tank.getX(), tank.getY()-tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+			}
+			shadowCloneCoolDownDate.setTime(curDate.getTime()+SHADOW_CLONE_COOL_DOWN_S*1000);
 		}
 	}
 
