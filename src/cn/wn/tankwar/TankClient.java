@@ -68,6 +68,10 @@ public class TankClient extends Frame {
 
 	private RefreshThread refreshThread;
 
+	public int lifes = 3;
+
+	public int enemytankCount = 300;
+
 	/**
 	 * ³ÌÐòÈë¿Ú
 	 * 
@@ -125,7 +129,7 @@ public class TankClient extends Frame {
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
 				new PlayerTankController(this), new PlayerTankView(), true,
 				PLAYER_TANK_HEALTH));
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 12; i++) {
 			synchronized (tanks) {
 				tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE), random
 						.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE, TANK_SIZE,
@@ -186,8 +190,9 @@ public class TankClient extends Frame {
 					continue;
 				}
 				synchronized (tanks) {
-					if (getAICount(tanks)<3) {
-						for (int i = 0; i < 3; i++) {
+					if (getAICount(tanks)<5&&enemytankCount   > 0) {
+						for (int i = 0; i < 6; i++) {
+							enemytankCount--;
 							tanks.add(new Tank(random
 									.nextInt(SCR_WIDTH - TANK_SIZE), random
 									.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
@@ -389,8 +394,9 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_F2:
-				if (!playerTankAlive) {
+				if (!playerTankAlive && lifes >0) {
 					playerTankAlive = true;
+					lifes--;
 					synchronized (tanks) {
 						tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
 								random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,

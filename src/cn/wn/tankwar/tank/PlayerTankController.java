@@ -19,7 +19,7 @@ import cn.wn.tankwar.missile.MissileView;
  */
 public class PlayerTankController implements Controller {
 	protected static final int SPEED = 4;
-	private static final int SHADOW_CLONE_COOL_DOWN_S = 10;
+	private static final int SHADOW_CLONE_COOL_DOWN_S = 30;
 	protected Tank tank;
 	protected TankClient tc;
 	private Date shadowCloneCoolDownDate = new Date();
