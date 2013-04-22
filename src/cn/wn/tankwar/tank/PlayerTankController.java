@@ -170,4 +170,12 @@ public class PlayerTankController implements Controller {
 		}
 	}
 
+	public boolean isPlayerTank() {
+		return true;
+	}
+
+	public Date getShadowCloneCoolDownDate() {
+		return shadowCloneCoolDownDate;
+	}
+
 }

@@ -41,4 +41,8 @@ public class Shield {
 	public ShieldView getView() {
 		return view;
 	}
+
+	public Date getCoolDownDate() {
+		return coolDownDate;
+	}
 }

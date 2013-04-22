@@ -112,4 +112,9 @@ public class EnemyTankController extends PlayerTankController {
 		}
 	}
 
+	@Override
+	public boolean isPlayerTank() {
+		return false;
+	}
+
 }

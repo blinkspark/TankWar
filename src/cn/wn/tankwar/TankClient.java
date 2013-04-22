@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import cn.wn.tankwar.explode.Explode;
@@ -31,6 +32,10 @@ import cn.wn.tankwar.tank.Tank;
  * 
  */
 public class TankClient extends Frame {
+
+	private static final int STRING_Y = 50;
+
+	private static final int STRING_X = 20;
 
 	public static final int ENEMY_TANK_HEALTH = 1;
 
@@ -71,6 +76,10 @@ public class TankClient extends Frame {
 	public int lifes = 3;
 
 	public int enemytankCount = 300;
+
+	private int line = 0;
+
+	private static final int LINE_HEIGHT = 20;
 
 	/**
 	 * 程序入口
@@ -131,10 +140,10 @@ public class TankClient extends Frame {
 				PLAYER_TANK_HEALTH));
 		for (int i = 0; i < 12; i++) {
 			synchronized (tanks) {
-				tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE), random
-						.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE, TANK_SIZE,
-						new EnemyTankController(this), new EnemyTankView(), false,
-						ENEMY_TANK_HEALTH));
+				tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
+						random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+						TANK_SIZE, new EnemyTankController(this),
+						new EnemyTankView(), false, ENEMY_TANK_HEALTH));
 			}
 		}
 
@@ -169,7 +178,7 @@ public class TankClient extends Frame {
 	class RefreshThread extends Thread {
 
 		private boolean exit = false;
-		private boolean	pause = true;
+		private boolean pause = true;
 
 		public void setExitFlag(boolean exit) {
 			this.exit = exit;
@@ -190,15 +199,15 @@ public class TankClient extends Frame {
 					continue;
 				}
 				synchronized (tanks) {
-					if (getAICount(tanks)<5&&enemytankCount   > 0) {
+					if (getAICount(tanks) < 5 && enemytankCount > 0) {
 						for (int i = 0; i < 6; i++) {
 							enemytankCount--;
-							tanks.add(new Tank(random
-									.nextInt(SCR_WIDTH - TANK_SIZE), random
-									.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
-									TANK_SIZE, new EnemyTankController(
-											TankClient.this), new EnemyTankView(),
-											false, ENEMY_TANK_HEALTH));
+							tanks.add(new Tank(random.nextInt(SCR_WIDTH
+									- TANK_SIZE), random.nextInt(SCR_HEIGHT
+									- TANK_SIZE), TANK_SIZE, TANK_SIZE,
+									new EnemyTankController(TankClient.this),
+									new EnemyTankView(), false,
+									ENEMY_TANK_HEALTH));
 						}
 					}
 					for (int i = 0; i < tanks.size(); i++) {
@@ -234,7 +243,7 @@ public class TankClient extends Frame {
 		private int getAICount(ArrayList<Tank> tanks) {
 			int count = 0;
 			for (int i = 0; i < tanks.size(); i++) {
-				if(!tanks.get(i).isGood()){
+				if (!tanks.get(i).isGood()) {
 					count++;
 				}
 			}
@@ -291,6 +300,73 @@ public class TankClient extends Frame {
 			}
 		}
 
+		// 坦克命数
+		String lifesString = "lifes: " + lifes;
+		g.drawString(lifesString, STRING_X, STRING_Y + line * LINE_HEIGHT);
+
+		// 坦克生命值
+		String healthString = "HP: " + getTankHealth();
+		g.drawString(healthString, STRING_X, STRING_Y + (line+1) * LINE_HEIGHT);
+
+		// 敌方坦克数
+		String enemyTankString = "敌方坦克剩余: " + enemytankCount;
+		g.drawString(enemyTankString, STRING_X, STRING_Y + (line + 2)
+				* LINE_HEIGHT);
+
+		// 护盾冷却时间
+		String shieldCDString = "护盾冷却: " + getShieldCoolDown();
+		g.drawString(shieldCDString, STRING_X, STRING_Y + (line + 3)
+				* LINE_HEIGHT);
+
+		// 影分身冷却时间
+		String shadowCloneCDString = "影分身冷却: " + getShadowCloneCoolDown();
+		g.drawString(shadowCloneCDString, STRING_X, STRING_Y + (line + 4)
+				* LINE_HEIGHT);
+	}
+
+	private int getTankHealth() {
+		int health = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			Tank tank = tanks.get(i);
+			if(tank.getController().isPlayerTank()){
+				health = tank.getHealth();
+			}
+		}
+		return health;
+	}
+
+	private int getShadowCloneCoolDown() {
+		long cd_ms = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			Tank tank = tanks.get(i);
+			if (tank.getController().isPlayerTank()) {
+				cd_ms = tank.getController().getShadowCloneCoolDownDate().getTime()-new Date().getTime();
+			}
+		}
+		
+		int cd_s = (int) (cd_ms/1000);
+		if (cd_s < 0) {
+			cd_s = 0;
+		}
+
+		return cd_s;
+	}
+
+	private int getShieldCoolDown() {
+		long cd_ms = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			Tank tank = tanks.get(i);
+			if (tank.getController().isPlayerTank()) {
+				cd_ms = tank.getShield().getCoolDownDate().getTime()
+						- new Date().getTime();
+			}
+		}
+		int cd_s = (int) (cd_ms / 1000);
+		if(cd_s<0){
+			cd_s = 0;
+		}
+		
+		return cd_s;
 	}
 
 	/**
@@ -394,15 +470,16 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_F2:
-				if (!playerTankAlive && lifes >0) {
+				if (!playerTankAlive && lifes > 0) {
 					playerTankAlive = true;
 					lifes--;
 					synchronized (tanks) {
-						tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
-								random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
-								TANK_SIZE,
-								new PlayerTankController(TankClient.this),
-								new PlayerTankView(), true, PLAYER_TANK_HEALTH));
+						tanks.add(new Tank(random
+								.nextInt(SCR_WIDTH - TANK_SIZE), random
+								.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+								TANK_SIZE, new PlayerTankController(
+										TankClient.this), new PlayerTankView(),
+								true, PLAYER_TANK_HEALTH));
 					}
 				}
 				break;
@@ -438,7 +515,7 @@ public class TankClient extends Frame {
 					} else {
 						closeFullScreen();
 					}
-				}else {
+				} else {
 					refreshThread.setPause(!refreshThread.isPause());
 				}
 				break;

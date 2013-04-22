@@ -18,5 +18,10 @@ public class ShadowCloneTankController extends PlayerTankController {
 		//Do Nothing
 	}
 
+	@Override
+	public boolean isPlayerTank() {
+		return false;
+	}
+
 
 }
