@@ -169,6 +169,7 @@ public class TankClient extends Frame {
 	class RefreshThread extends Thread {
 
 		private boolean exit = false;
+		private boolean	pause = true;
 
 		public void setExitFlag(boolean exit) {
 			this.exit = exit;
@@ -180,6 +181,14 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
+				if (pause) {
+					try {
+						Thread.sleep(REFRESH_SEQUENCE);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					continue;
+				}
 				synchronized (tanks) {
 					if (getAICount(tanks)<3) {
 						for (int i = 0; i < 3; i++) {
@@ -229,6 +238,14 @@ public class TankClient extends Frame {
 				}
 			}
 			return count;
+		}
+
+		public boolean isPause() {
+			return pause;
+		}
+
+		public void setPause(boolean pause) {
+			this.pause = pause;
 		}
 
 	}
@@ -419,6 +436,8 @@ public class TankClient extends Frame {
 					} else {
 						closeFullScreen();
 					}
+				}else {
+					refreshThread.setPause(!refreshThread.isPause());
 				}
 				break;
 			case KeyEvent.VK_UP:
