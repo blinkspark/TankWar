@@ -34,16 +34,16 @@ import cn.wn.tankwar.tank.PlayerTankView;
  */
 public class TankClient extends Frame {
 
-	private static final int ENEMY_TANK_HEALTH = 1;
+	public static final int ENEMY_TANK_HEALTH = 1;
 
-	private static final int PLAYER_TANK_HEALTH = 3;
+	public static final int PLAYER_TANK_HEALTH = 3;
 
-	private static final int TANK_SIZE = 48;
+	public static final int TANK_SIZE = 48;
 
 	/**
 	 * Ë¢ÐÂÆµÂÊ
 	 */
-	private static final int REFRESH_SEQUENCE = 1000 / 30;
+	public static final int REFRESH_SEQUENCE = 1000 / 30;
 
 	private static final long serialVersionUID = 6432091120610414896L;
 
@@ -128,10 +128,12 @@ public class TankClient extends Frame {
 				new PlayerTankController(this), new PlayerTankView(), true,
 				PLAYER_TANK_HEALTH));
 		for (int i = 0; i < 5; i++) {
-			tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE), random
-					.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE, TANK_SIZE,
-					new EnemyTankController(this), new EnemyTankView(), false,
-					ENEMY_TANK_HEALTH));
+			synchronized (tanks) {
+				tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE), random
+						.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE, TANK_SIZE,
+						new EnemyTankController(this), new EnemyTankView(), false,
+						ENEMY_TANK_HEALTH));
+			}
 		}
 
 		obtacle = new Obtacle(400, 400, 48, 48, new ObtacleView());
@@ -139,8 +141,8 @@ public class TankClient extends Frame {
 				new MissileView(), Directions.RD, false));
 		refreshThread = new RefreshThread();
 		refreshThread.start();
-	
- 		R.Audio.bgmAudioClip.loop();
+
+		R.Audio.bgmAudioClip.loop();
 	}
 
 	/**
@@ -178,26 +180,28 @@ public class TankClient extends Frame {
 		@Override
 		public void run() {
 			while (!exit) {
-				if (tanks.size() < 4) {
-					for (int i = 0; i < 3; i++) {
-						tanks.add(new Tank(random
-								.nextInt(SCR_WIDTH - TANK_SIZE), random
-								.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
-								TANK_SIZE, new EnemyTankController(
-										TankClient.this), new EnemyTankView(),
-								false, ENEMY_TANK_HEALTH));
-					}
-				}
-				for (int i = 0; i < tanks.size(); i++) {
-					Tank tank = tanks.get(i);
-					if (tank.isAlive()) {
-						tank.getController().move();
-					} else {
-						tanks.remove(i);
-						if (tank.isGood()) {
-							playerTankAlive = false;
+				synchronized (tanks) {
+					if (getAICount(tanks)<3) {
+						for (int i = 0; i < 3; i++) {
+							tanks.add(new Tank(random
+									.nextInt(SCR_WIDTH - TANK_SIZE), random
+									.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+									TANK_SIZE, new EnemyTankController(
+											TankClient.this), new EnemyTankView(),
+											false, ENEMY_TANK_HEALTH));
 						}
-						i--;
+					}
+					for (int i = 0; i < tanks.size(); i++) {
+						Tank tank = tanks.get(i);
+						if (tank.isAlive()) {
+							tank.getController().move();
+						} else {
+							tanks.remove(i);
+							if (tank.isGood()) {
+								playerTankAlive = false;
+							}
+							i--;
+						}
 					}
 				}
 				for (int i = 0; i < missiles.size(); i++) {
@@ -215,6 +219,16 @@ public class TankClient extends Frame {
 					e.printStackTrace();
 				}
 			}
+		}
+
+		private int getAICount(ArrayList<Tank> tanks) {
+			int count = 0;
+			for (int i = 0; i < tanks.size(); i++) {
+				if(!tanks.get(i).isGood()){
+					count++;
+				}
+			}
+			return count;
 		}
 
 	}
@@ -321,23 +335,31 @@ public class TankClient extends Frame {
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 			case KeyEvent.VK_UP:
-				for (Tank tank : tanks) {
-					tank.setUpPressed(true);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setUpPressed(true);
+					}
 				}
 				break;
 			case KeyEvent.VK_DOWN:
-				for (Tank tank : tanks) {
-					tank.setDownPressed(true);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setDownPressed(true);
+					}
 				}
 				break;
 			case KeyEvent.VK_LEFT:
-				for (Tank tank : tanks) {
-					tank.setLeftPressed(true);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setLeftPressed(true);
+					}
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				for (Tank tank : tanks) {
-					tank.setRightPressed(true);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setRightPressed(true);
+					}
 				}
 				break;
 
@@ -356,17 +378,30 @@ public class TankClient extends Frame {
 			case KeyEvent.VK_F2:
 				if (!playerTankAlive) {
 					playerTankAlive = true;
-					tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
-							random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
-							TANK_SIZE,
-							new PlayerTankController(TankClient.this),
-							new PlayerTankView(), true, PLAYER_TANK_HEALTH));
+					synchronized (tanks) {
+						tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
+								random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
+								TANK_SIZE,
+								new PlayerTankController(TankClient.this),
+								new PlayerTankView(), true, PLAYER_TANK_HEALTH));
+					}
 				}
 				break;
 			case KeyEvent.VK_W:
-				for (Tank tank : tanks) {
-					if (tank.isGood()) {
-						tank.getController().shieldOn();
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						if (tank.isGood()) {
+							tank.getController().shieldOn();
+						}
+					}
+				}
+				break;
+			case KeyEvent.VK_R:
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						if (tank.isGood()) {
+							tank.getController().shadowClone();
+						}
 					}
 				}
 				break;
@@ -387,30 +422,40 @@ public class TankClient extends Frame {
 				}
 				break;
 			case KeyEvent.VK_UP:
-				for (Tank tank : tanks) {
-					tank.setUpPressed(false);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setUpPressed(false);
+					}
 				}
 				break;
 			case KeyEvent.VK_DOWN:
-				for (Tank tank : tanks) {
-					tank.setDownPressed(false);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setDownPressed(false);
+					}
 				}
 				break;
 			case KeyEvent.VK_LEFT:
-				for (Tank tank : tanks) {
-					tank.setLeftPressed(false);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setLeftPressed(false);
+					}
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				for (Tank tank : tanks) {
-					tank.setRightPressed(false);
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						tank.setRightPressed(false);
+					}
 				}
 				break;
 			case KeyEvent.VK_CONTROL:
 			case KeyEvent.VK_SPACE:
-				for (Tank tank : tanks) {
-					if (tank.isGood()) {
-						tank.getController().fire();
+				synchronized (tanks) {
+					for (Tank tank : tanks) {
+						if (tank.isGood()) {
+							tank.getController().fire();
+						}
 					}
 				}
 			default:

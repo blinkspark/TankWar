@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import cn.wn.tankwar.Directions;
+import cn.wn.tankwar.TankClient;
 import cn.wn.tankwar.interfaces.View;
 import cn.wn.tankwar.skill.Shield;
 
@@ -53,10 +54,22 @@ public class Tank {
 	 * @param view
 	 *            йсм╪
 	 */
-	public Tank(int x, int y, int width, int height, PlayerTankController controller,
-			View view,boolean good,int health) {
-		this.x = x;
-		this.y = y;
+	public Tank(int x, int y, int width, int height,
+			PlayerTankController controller, View view, boolean good, int health) {
+		if (x < 0) {
+			this.x = 0;
+		} else if (x > TankClient.SCR_WIDTH - width) {
+			this.x = TankClient.SCR_WIDTH - width;
+		} else {
+			this.x = x;
+		}
+		if (y < 0) {
+			this.y = 0;
+		} else if (y > TankClient.SCR_HEIGHT - height) {
+			this.y = TankClient.SCR_HEIGHT - height;
+		} else {
+			this.y = y;
+		}
 		this.width = width;
 		this.height = height;
 		this.direction = Directions.U;
@@ -67,7 +80,7 @@ public class Tank {
 		this.centerPoint = new Point(x + width / 2, y + height / 2);
 		this.view.attach(this);
 		this.controller.attach(this);
-		this.good= good;
+		this.good = good;
 		alive = true;
 		this.health = health;
 		shield = new Shield(this);
@@ -285,8 +298,8 @@ public class Tank {
 	}
 
 	public void updateCenter() {
-			centerPoint.x = x + width / 2;
-			centerPoint.y = y + height / 2;
+		centerPoint.x = x + width / 2;
+		centerPoint.y = y + height / 2;
 	}
 
 	public Rectangle getRect() {
@@ -312,7 +325,7 @@ public class Tank {
 	public void beHited() {
 		if (shield.isOn()) {
 			shield.setOn(false);
-		}else {
+		} else {
 			this.health--;
 		}
 	}

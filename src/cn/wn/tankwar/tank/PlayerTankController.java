@@ -153,4 +153,13 @@ public class PlayerTankController implements Controller {
 		tank.getShield().setOn(true);
 	}
 
+	public void shadowClone() {
+		synchronized (tc.getTanks()) {
+			tc.getTanks().add(new Tank(tank.getX()-tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+			tc.getTanks().add(new Tank(tank.getX()+tank.getWidth(), tank.getY(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+			tc.getTanks().add(new Tank(tank.getX(), tank.getY()+tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+			tc.getTanks().add(new Tank(tank.getX(), tank.getY()-tank.getHeight(), tank.getWidth(), tank.getHeight(), new ShadowCloneTankController(tc), new PlayerTankView(), true, 1));
+		}
+	}
+
 }
