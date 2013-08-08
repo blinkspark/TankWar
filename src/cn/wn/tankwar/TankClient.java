@@ -73,9 +73,9 @@ public class TankClient extends Frame {
 
 	private RefreshThread refreshThread;
 
-	public int lifes = 3;
+	public int lifes = 5;
 
-	public int enemytankCount = 300;
+	public int enemytankCount = 100;
 
 	private int line = 0;
 
@@ -138,7 +138,7 @@ public class TankClient extends Frame {
 		tanks.add(new Tank(100, 100, TANK_SIZE, TANK_SIZE,
 				new PlayerTankController(this), new PlayerTankView(), true,
 				PLAYER_TANK_HEALTH));
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 8; i++) {
 			synchronized (tanks) {
 				tanks.add(new Tank(random.nextInt(SCR_WIDTH - TANK_SIZE),
 						random.nextInt(SCR_HEIGHT - TANK_SIZE), TANK_SIZE,
@@ -199,8 +199,8 @@ public class TankClient extends Frame {
 					continue;
 				}
 				synchronized (tanks) {
-					if (getAICount(tanks) < 5 && enemytankCount > 0) {
-						for (int i = 0; i < 6; i++) {
+					if (getAICount(tanks) < 4 && enemytankCount > 0) {
+						for (int i = 0; i < 4; i++) {
 							enemytankCount--;
 							tanks.add(new Tank(random.nextInt(SCR_WIDTH
 									- TANK_SIZE), random.nextInt(SCR_HEIGHT
